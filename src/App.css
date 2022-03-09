@@ -1,0 +1,10 @@
+.MangasPage {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    text-align: center;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+ 
+}

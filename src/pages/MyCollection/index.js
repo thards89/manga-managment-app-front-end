@@ -1,52 +1,54 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-import { fetchUsersMangas } from "../../store/manga/actions";
-import { selectUsersManga } from "../../store/manga/selectors";
+import { selectUsersManga } from "../../store/user/selectors";
+import CollectionDetails from "../../components/CollectionDetails";
+import SearchBar from "../../components/SearchBar";
 
 export default function MyCollection() {
-  const dispatch = useDispatch();
-  const { userId } = useParams();
-
   const mangas = useSelector(selectUsersManga);
 
-  useEffect(() => {
-    dispatch(fetchUsersMangas(userId));
-  }, [dispatch, userId]);
+  function submitForm(event) {
+    event.preventDefault();
+  }
 
-  return mangas ? (
-    mangas.map((manga) => {
-      const {
-        mangaDb,
-        volumesOwned,
-        reading,
-        lastVolumeRead,
-        collectionComplete,
-        star,
-      } = manga;
+  if (!mangas) return <div>loading</div>;
 
-      return (
-        <>
-          <h1>Fetched Title:{mangaDb.title} </h1>
-          <img src={mangaDb.imgUrl} alt="ïmg"></img>
-          <p>Fetched Author:{mangaDb.author}</p>
-          <p>Fetched Publisher:{mangaDb.publisher}</p>
-          <p>Fetched Total Volumes: {mangaDb.totalVolumes}</p>
-          <p>Fetched Volumes Owned: {volumesOwned}</p>
-          <p>
-            <b>Fetched Are you reading it?: {reading.true ? "yes" : "no"}</b>
-          </p>
-          <p>Fetched Last Volume Read: {lastVolumeRead}</p>
-          <p>
-            Fetched Is the Collection Complete?:{" "}
-            {collectionComplete.true ? "yes" : "no"}
-          </p>
-          <p>Fetched Stars: {star}</p>
-        </>
-      );
-    })
-  ) : (
-    <div>loading</div>
+  return (
+    <div>
+      <SearchBar />
+      <p></p>
+      {mangas.map((manga) => {
+        const { id, title, author, imgUrl, publisher, totalVolumes } = manga;
+        console.log("the manga", manga);
+        const {
+          volumesOwned,
+          collectionComplete,
+          lastVolumeRead,
+          reading,
+          star,
+        } = manga.userMangas;
+        return (
+          <div>
+            <CollectionDetails
+              key={id}
+              id={id}
+              title={title}
+              imgUrl={imgUrl}
+              author={author}
+              publisher={publisher}
+              totalVolumes={totalVolumes}
+              volumesOwned={volumesOwned}
+              reading={reading}
+              lastVolumeRead={lastVolumeRead}
+              collectionComplete={collectionComplete}
+              star={star}
+              buttonDetails={true}
+              details={false}
+              buttonEdit={false}
+            />
+          </div>
+        );
+      })}
+    </div>
   );
 }

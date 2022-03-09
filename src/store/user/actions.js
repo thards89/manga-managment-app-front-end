@@ -26,6 +26,34 @@ const tokenStillValid = (userWithoutToken) => ({
 
 export const logOut = () => ({ type: LOG_OUT });
 
+export function startLoading() {
+  return {
+    type: "user/loading",
+  };
+}
+
+// export function mangaByIdFetched(data) {
+//   console.log(data);
+//   return {
+//     type: "user/mangaByIdFetched",
+//     payload: data,
+//   };
+// }
+
+//thunks
+
+// export const fetchMangaById = (mangaId) => {
+//   return async (dispatch, getState) => {
+//     try {
+//       const response = await axios.get(`${apiUrl}/manga/${mangaId}`);
+//       console.log("the response", response.data);
+//       dispatch(mangaByIdFetched(response.data));
+//     } catch (e) {
+//       console.log(e);
+//     }
+//   };
+// };
+
 export const signUp = (name, email, password) => {
   return async (dispatch, getState) => {
     dispatch(appLoading());
@@ -60,7 +88,7 @@ export const login = (email, password) => {
         email,
         password,
       });
-
+      console.log("logged in user", response.data);
       dispatch(loginSuccess(response.data));
       dispatch(showMessageWithTimeout("success", false, "welcome back!", 1500));
       dispatch(appDoneLoading());

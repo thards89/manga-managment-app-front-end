@@ -15,6 +15,7 @@ import MyCollectionDetails from "./pages/MyCollectionDetails";
 import { useDispatch, useSelector } from "react-redux";
 import { selectAppLoading } from "./store/appState/selectors";
 import { getUserWithStoredToken } from "./store/user/actions";
+import CollectionDetails from "./components/CollectionDetails";
 
 function App() {
   const dispatch = useDispatch();
@@ -31,8 +32,12 @@ function App() {
       {isLoading ? <Loading /> : null}
       <Routes>
         <Route exact path="/" element={<Homepage />} />
-        <Route exact path="/manga/:mangaId/:userId" element={<MyCollectionDetails />}/>
-        <Route exact path="/mangas/:userId" element={<MyCollection />} />
+        <Route exact path="/mangas" element={<MyCollection />} />
+        <Route
+          exact
+          path="/mangas/:mangaId"
+          element={<MyCollectionDetails />}
+        />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
       </Routes>

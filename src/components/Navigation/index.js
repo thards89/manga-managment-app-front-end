@@ -20,7 +20,7 @@ export default function Navigation() {
         <Nav style={{ width: "100%" }} fill>
           <NavbarItem path="/" linkText="Home" />
           <Navbar.Brand as={NavLink} to="/">
-            MANGA MANAGMENT APP
+            MY MANGA COLLECTION
           </Navbar.Brand>
           {loginLogoutControls}
         </Nav>
