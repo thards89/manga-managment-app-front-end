@@ -1,10 +1,11 @@
 /* eslint-disable import/no-anonymous-default-export */
-import { LOG_OUT, LOGIN_SUCCESS, TOKEN_STILL_VALID } from "./actions";
+import { LOG_OUT, LOGIN_SUCCESS, TOKEN_STILL_VALID,HANDLE_SEARCH_ICONS } from "./actions";
 
 const initialState = {
   token: localStorage.getItem("token"),
   name: null,
   email: null,
+  searchKeyword: "",
 };
 
 export default (state = initialState, action) => {
@@ -37,3 +38,4 @@ export default (state = initialState, action) => {
       return state;
   }
 };
+

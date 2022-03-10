@@ -1,9 +1,8 @@
 import Button from "react-bootstrap/Button";
 import { NavLink } from "react-router-dom";
 
-
 export default function CollectionDetails(props) {
-  console.log("What are my props", props);
+  // console.log("What are my props", props);
 
   function submitForm(event) {
     event.preventDefault();
