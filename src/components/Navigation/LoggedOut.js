@@ -5,6 +5,7 @@ export default function LoggedOut() {
   return (
     <>
       <NavbarItem path="/login" linkText="Login" />
+      <NavbarItem path="/signup" linkText="Sign Up" />
     </>
   );
 }

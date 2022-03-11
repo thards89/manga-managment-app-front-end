@@ -15,7 +15,7 @@ import MyCollectionDetails from "./pages/MyCollectionDetails";
 import { useDispatch, useSelector } from "react-redux";
 import { selectAppLoading } from "./store/appState/selectors";
 import { getUserWithStoredToken } from "./store/user/actions";
-import CollectionDetails from "./components/CollectionDetails";
+import Album from "./components/Album";
 
 function App() {
   const dispatch = useDispatch();
@@ -31,7 +31,7 @@ function App() {
       <MessageBox />
       {isLoading ? <Loading /> : null}
       <Routes>
-        <Route exact path="/" element={<Homepage />} />
+        <Route exact path="/" element={<Album />} />
         <Route exact path="/mangas" element={<MyCollection />} />
         <Route
           exact

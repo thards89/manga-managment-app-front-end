@@ -55,7 +55,7 @@ export function startLoading() {
 //   };
 // };
 
-export const signUp = (name, email, password) => {
+export const signUp = (name, email, password, userName) => {
   return async (dispatch, getState) => {
     dispatch(appLoading());
     try {
@@ -63,10 +63,11 @@ export const signUp = (name, email, password) => {
         name,
         email,
         password,
+        userName,
       });
 
       dispatch(loginSuccess(response.data));
-      dispatch(showMessageWithTimeout("success", true, "account created"));
+      dispatch(showMessageWithTimeout("success", true, "Account created"));
       dispatch(appDoneLoading());
     } catch (error) {
       if (error.response) {
