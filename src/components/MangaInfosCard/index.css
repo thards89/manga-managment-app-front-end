@@ -1,0 +1,11 @@
+.index {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-left: 50px;
+    justify-content: space-around;
+    gap: 100px;
+  
+    
+
+}

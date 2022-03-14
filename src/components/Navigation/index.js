@@ -49,10 +49,16 @@ import LoggedIn from "./LoggedIn";
 import LoggedOut from "./LoggedOut";
 import Navbar from "react-bootstrap/Navbar";
 import { useNavigate, Link } from "react-router-dom";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 
-// const pages = ['Home', 'My Collection'];
-const settings = ['Profile','Logout'];
+const themeTitle = createTheme({
+  typography: {
+    fontSize: "16",
+    fontFamily: ["Great Vibes", "cursive"].join(","),
+  },
+});
+
 
 const ResponsiveAppBar = () => {
   const token = useSelector(selectToken);
@@ -86,19 +92,24 @@ const ResponsiveAppBar = () => {
     setAnchorElNav(navigate("/mangas"));
     };
 
+  const navigateNewManga = () => {
+    setAnchorElNav(navigate("/registerNewManga"));
+  };
+
   return (
     <AppBar position="static" sx={{ bgcolor: "black" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
-          >
-            My Manga Collection
-          </Typography>
-
+          <ThemeProvider theme={themeTitle}>
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
+            >
+              My Manga Collection
+            </Typography>
+          </ThemeProvider>
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
@@ -136,14 +147,16 @@ const ResponsiveAppBar = () => {
               </MenuItem>
             </Menu>
           </Box>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
-          >
-            LOGO
-          </Typography>
+          <ThemeProvider theme={themeTitle}>
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
+            >
+              MY MANGA COLLECTION
+            </Typography>
+          </ThemeProvider>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             <Button
               onClick={navigateHomePage}
@@ -156,6 +169,12 @@ const ResponsiveAppBar = () => {
               sx={{ my: 2, color: "white", display: "block" }}
             >
               My Collection
+            </Button>
+            <Button
+              onClick={navigateNewManga}
+              sx={{ my: 2, color: "white", display: "block" }}
+            >
+              Register a Manga
             </Button>
           </Box>
 
@@ -176,13 +195,7 @@ const ResponsiveAppBar = () => {
               }}
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
+            ></Menu>
           </Box>
         </Toolbar>
       </Container>

@@ -10,12 +10,11 @@ import Login from "./pages/Login";
 import Homepage from "./pages/Homepage";
 import MangaRegistration from "./pages/MangaRegistration";
 import MyCollection from "./pages/MyCollection";
-import MyCollectionDetails from "./pages/MyCollectionDetails";
 
 import { useDispatch, useSelector } from "react-redux";
 import { selectAppLoading } from "./store/appState/selectors";
 import { getUserWithStoredToken } from "./store/user/actions";
-import Album from "./components/Album";
+
 
 function App() {
   const dispatch = useDispatch();
@@ -31,13 +30,9 @@ function App() {
       <MessageBox />
       {isLoading ? <Loading /> : null}
       <Routes>
-        <Route exact path="/" element={<Album />} />
+        <Route exact path="/" element={<Homepage />} />
         <Route exact path="/mangas" element={<MyCollection />} />
-        <Route
-          exact
-          path="/mangas/:mangaId"
-          element={<MyCollectionDetails />}
-        />
+        <Route exact path="/registerNewManga" element={<MangaRegistration />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
       </Routes>

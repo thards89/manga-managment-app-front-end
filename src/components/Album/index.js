@@ -15,6 +15,30 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Collapse from "@mui/material/Collapse";
+import { useState } from "react";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { styled } from "@mui/material/styles";
+import IconButton from "@mui/material/IconButton";
+
+
+const ExpandMore = styled((props) => {
+  const { expand, ...other } = props;
+  return <IconButton {...other} />;
+})(({ theme, expand }) => ({
+  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
+  margin: "1px",
+  transition: theme.transitions.create("transform", {
+    duration: theme.transitions.duration.shortest,
+  }),
+}));
+
+const themeTitle = createTheme({
+  typography: {
+    fontSize: "16",
+    fontFamily: ["Great Vibes", "cursive"].join(","),
+  },
+});
 
 function Copyright() {
   return (
@@ -29,22 +53,25 @@ function Copyright() {
   );
 }
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 const theme = createTheme();
 
-export default function Album() {
+
+export default function Album(props) {
+    
+  const [expanded, setExpanded] = useState(false);
+
+    const handleExpandClick = () => {
+      setExpanded(!expanded);
+    };
+
+    const cards = [{title: props.title}]
+    
+
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <AppBar position="relative">
-        <Toolbar>
-          <CameraIcon sx={{ mr: 2 }} />
-          <Typography variant="h6" color="inherit" noWrap>
-            Album layout
-          </Typography>
-        </Toolbar>
-      </AppBar>
       <main>
         {/* Hero unit */}
         <Box
@@ -55,37 +82,30 @@ export default function Album() {
           }}
         >
           <Container maxWidth="sm">
-            <Typography
-              component="h1"
-              variant="h2"
-              align="center"
-              color="text.primary"
-              gutterBottom
-            >
-              Album layout
-            </Typography>
-            <Typography
-              variant="h5"
-              align="center"
-              color="text.secondary"
-              paragraph
-            >
-              Something short and leading about the collection below—its
-              contents, the creator, etc. Make it short and sweet, but not too
-              short so folks don&apos;t simply skip over it entirely.
-            </Typography>
-            <Stack
-              sx={{ pt: 4 }}
-              direction="row"
-              spacing={2}
-              justifyContent="center"
-            >
-              <Button variant="contained">Main call to action</Button>
-              <Button variant="outlined">Secondary action</Button>
-            </Stack>
+            <ThemeProvider theme={themeTitle}>
+              <Typography
+                component="h1"
+                variant="h2"
+                align="center"
+                color="text.primary"
+                gutterBottom
+              >
+                My Collection
+              </Typography>
+            </ThemeProvider>
+            <ThemeProvider theme={themeTitle}>
+              <Typography
+                variant="h5"
+                align="center"
+                color="text.secondary"
+                paragraph
+              >
+                Total Mangas Registered:
+              </Typography>
+            </ThemeProvider>
           </Container>
         </Box>
-        <Container sx={{ py: 8 }} maxWidth="md">
+        <Container sx={{ py: 1 }} maxWidth="md">
           {/* End hero unit */}
           <Grid container spacing={4}>
             {cards.map((card) => (
@@ -97,32 +117,51 @@ export default function Album() {
                     flexDirection: "column",
                   }}
                 >
-                  <CardMedia
-                    component="img"
-                    sx={{
-                      // 16:9
-                      pt: "56.25%",
-                    }}
-                    image="https://source.unsplash.com/random"
-                    alt="random"
-                  />
-                  <CardContent sx={{ flexGrow: 1 }}>
+                  <CardMedia component="img" image={props.imgUrl} alt="img" />
+                  <CardContent sx={{ flexGrow: 0 }}>
                     <Typography gutterBottom variant="h5" component="h2">
-                      Heading
+                      {props.title}
                     </Typography>
                     <Typography>
-                      This is a media card. You can use this section to describe
-                      the content.
+                      {<p>Author:{props.author}</p>}
+                      <p>Publisher:{props.publisher}</p>
+                      <p>
+                        Volumes Owned: {props.volumesOwned}/{props.totalVolumes}
+                      </p> 
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small">View</Button>
                     <Button size="small">Edit</Button>
+                    <Button size="small">View</Button>
+                    <ExpandMore
+                      expand={expanded}
+                      onClick={handleExpandClick}
+                      aria-expanded={expanded}
+                      aria-label="show more"
+                    >
+                      <ExpandMoreIcon />
+                    </ExpandMore>
                   </CardActions>
+                  <Collapse in={expanded} timeout="auto" unmountOnExit>
+                    <CardContent>
+                      <Typography paragraph>
+                        <p>
+                          Are you reading it?: {props.reading ? "Yes" : "No"}
+                        </p>
+                        <p>Last Volume Read: {props.lastVolumeRead}</p>
+                        <p>
+                          Is the Collection Complete?:{" "}
+                          {props.collectionComplete ? "Yes" : "No"}
+                        </p>
+                        <p>Stars: {props.star}</p>
+                      </Typography>
+                    </CardContent>
+                  </Collapse>
                 </Card>
               </Grid>
             ))}
           </Grid>
+          
         </Container>
       </main>
       {/* Footer */}
