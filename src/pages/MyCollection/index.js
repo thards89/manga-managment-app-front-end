@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { selectUsersManga } from "../../store/user/selectors";
-import CollectionDetails from "../../components/MangaInfosCard";
+import MangaCard from "../../components/MangaCard";
 
 import Form from "react-bootstrap/Form";
 import { Col } from "react-bootstrap";
@@ -216,7 +216,7 @@ export default function MyCollection() {
             star,
           } = manga.userMangas;
           return (
-            <CollectionDetails
+            <MangaCard
               key={id}
               id={id}
               title={title}

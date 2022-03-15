@@ -1,8 +1,6 @@
-import MangaForm from "../../components/MangaForm";
+import MangaRegistrationForm from "../../components/MangaRegistrationForm";
 
 export default function MangaResigtration() {
 
-  return (
-    <MangaForm />
-  );
+  return <MangaRegistrationForm />;
 }

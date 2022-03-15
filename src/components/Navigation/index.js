@@ -1,35 +1,3 @@
-// import React from "react";
-// import Navbar from "react-bootstrap/Navbar";
-// import Nav from "react-bootstrap/Nav";
-// import { NavLink } from "react-router-dom";
-// import { useSelector } from "react-redux";
-// import { selectToken } from "../../store/user/selectors";
-// import NavbarItem from "./NavbarItem";
-// import LoggedIn from "./LoggedIn";
-// import LoggedOut from "./LoggedOut";
-
-// export default function Navigation() {
-//   const token = useSelector(selectToken);
-
-//   const loginLogoutControls = token ? <LoggedIn /> : <LoggedOut />;
-
-//   return (
-//     <Navbar bg="light" expand="lg">
-//       <Navbar.Toggle aria-controls="basic-navbar-nav" />
-//       <Navbar.Collapse id="basic-navbar-nav">
-//         <Nav style={{ width: "100%" }} fill>
-//           <NavbarItem path="/" linkText="Home" />
-//           <Navbar.Brand as={NavLink} to="/">
-//             MY MANGA COLLECTION
-//           </Navbar.Brand>
-//           {loginLogoutControls}
-//         </Nav>
-//       </Navbar.Collapse>
-//     </Navbar>
-//   );
-// }
-
-
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -97,7 +65,10 @@ const ResponsiveAppBar = () => {
   };
 
   return (
-    <AppBar position="static" sx={{ bgcolor: "black" }}>
+    <AppBar
+      position="sticky"
+      sx={{ bgcolor: "black" }}
+    >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <ThemeProvider theme={themeTitle}>
@@ -164,21 +135,25 @@ const ResponsiveAppBar = () => {
             >
               Home
             </Button>
-            <Button
-              onClick={navigateMyCollection}
-              sx={{ my: 2, color: "white", display: "block" }}
-            >
-              My Collection
-            </Button>
-            <Button
-              onClick={navigateNewManga}
-              sx={{ my: 2, color: "white", display: "block" }}
-            >
-              Register a Manga
-            </Button>
+            {token ? (
+              <Button
+                onClick={navigateMyCollection}
+                sx={{ my: 2, color: "white", display: "block" }}
+              >
+                My Collection
+              </Button>
+            ) : null}
+            {token ? (
+              <Button
+                onClick={navigateNewManga}
+                sx={{ my: 2, color: "white", display: "block" }}
+              >
+                Register a Manga
+              </Button>
+            ) : null}
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
+          <Box sx={{ flexGrow: 0, width: "200px" }}>
             {loginLogoutControls}
             <Menu
               sx={{ mt: "40px" }}

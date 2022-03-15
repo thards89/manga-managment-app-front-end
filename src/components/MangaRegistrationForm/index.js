@@ -1,9 +1,10 @@
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
 import { Col } from "react-bootstrap";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Button from "react-bootstrap/Button";
+import { selectUsersManga } from "../../store/user/selectors";
 
 import FormGroup from "@mui/material/FormGroup";
 import FormLabel from "@mui/material/FormLabel";
@@ -14,12 +15,6 @@ import Typography from "@mui/material/Typography";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 
-// import {
-//   createAuction,
-//   getUserWithStoredToken,
-// } from "../../store/user/actions";
-// import { selectUser } from "../../store/user/selectors";
-// import { showMessageWithTimeout } from "../../store/appState/actions";
 
 const themeTitle = createTheme({
   typography: {
@@ -28,7 +23,10 @@ const themeTitle = createTheme({
   },
 });
 
-export default function MangaForm() {
+export default function MangaRegistrationForm() {
+  const mangas = useSelector(selectUsersManga);
+  const [mangaTitle, setMangaTitle] = useState([]);
+  const [suggestions, setSuggestions] = useState([]);
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [publisher, setPublisher] = useState("");
@@ -37,7 +35,36 @@ export default function MangaForm() {
   const [volumesOwned, setVolumesOwned] = useState("");
   const [lastVolumeRead, setVolumeRead] = useState("");
   const [stars, setStars] = useState("");
-  //   const user = useSelector(selectUser);
+  
+
+
+useEffect(() => {
+  setMangaTitle(mangas);
+}, [mangas]);
+
+const onChangeHandler = (text) =>{
+  let matches = []
+  if (text.length > 0) {
+    matches = mangas.filter(manga => {
+      const regex = new RegExp(`${text}`, "gi")
+      return manga.title.match(regex)
+    })
+  }
+  // console.log("what matches", matches)
+  setSuggestions(matches)
+  setTitle(text)
+}
+
+  const onSuggestHandler = (suggestion) => {
+    // console.log("suggestion", suggestion)
+    setTitle(suggestion.title)
+    setAuthor(suggestion.author);
+    setPublisher(suggestion.publisher);
+    setTotalVolumes(suggestion.totalVolumes);
+    setImageUrl(suggestion.imgUrl)
+    setSuggestions([])
+  }
+
 
   function submitForm(event) {
     event.preventDefault();
@@ -61,21 +88,36 @@ export default function MangaForm() {
         <FormGroup>
           <TextField
             value={title}
-            onChange={(event) => setTitle(event.target.value)}
+            onChange={(event) => onChangeHandler(event.target.value)}
             type="text"
             placeholder="Enter the Title of your manga"
             id="outlined-basic"
             label="Title"
             variant="outlined"
             style={{ marginBottom: "20px" }}
+            // onBlur={() => {
+            //   setTimeout(() => {
+            //     setSuggestions([]);
+            //   }, 100);
+            // }}
           />
+          {suggestions &&
+            suggestions.map((suggestion, i) => (
+              <div
+                key={i}
+                className="suggestion"
+                onClick={() => onSuggestHandler(suggestion)}
+              >
+                {suggestion.title}
+              </div>
+            ))}
         </FormGroup>
         <FormGroup>
           {/* <FormLabel>Author</FormLabel> */}
           <TextField
             value={author}
             onChange={(event) => setAuthor(event.target.value)}
-            type="number"
+            type="text"
             placeholder="Enter the name of the author"
             id="outlined-basic"
             label="Author"

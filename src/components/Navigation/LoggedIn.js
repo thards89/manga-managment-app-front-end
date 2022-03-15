@@ -10,8 +10,19 @@ export default function LoggedIn() {
   const user = useSelector(selectUser);
   return (
     <>
-      <Nav.Item style={{ padding: ".4em 1rem" }}>{user.email}</Nav.Item>
-      <Button onClick={() => dispatch(logOut())}>Logout</Button>
+      <div class="loggedIn">
+        <Nav.Item>{user.email}</Nav.Item>
+        <Button
+          style={{
+            backgroundColor: "white",
+            color: "black",
+            borderColor: "black",
+          }}
+          onClick={() => dispatch(logOut())}
+        >
+          Logout
+        </Button>
+      </div>
     </>
   );
 }
