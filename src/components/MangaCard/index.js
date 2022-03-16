@@ -1,10 +1,8 @@
-import { NavLink } from "react-router-dom";
 import "./index.css";
 import { updateUserManga } from "../../store/user/actions"
-import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { selectUser, selectUsersManga } from "../../store/user/selectors";
-import { selectAllMangas } from "../../store/manga/selectors";
+import { selectUser } from "../../store/user/selectors";
+
 
 import * as React from "react"; 
 import Button from "@mui/material/Button";
@@ -25,10 +23,9 @@ import IconButton from "@mui/material/IconButton";
 import FormGroup from "@mui/material/FormGroup";
 import TextField from "@mui/material/TextField";
 import FormLabel from "@mui/material/FormLabel";
-import { useNavigate } from "react-router-dom";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import { MarkUnreadChatAlt } from "@mui/icons-material";
+
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -69,9 +66,9 @@ function Copyright() {
 export default function MangaCard(props) {
   // console.log("What are my props", props);
 
-  const [expanded, setExpanded] = useState(false);
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const navigate = useNavigate();
+  // const [expanded, setExpanded] = useState(false);
+  // const [anchorElNav, setAnchorElNav] = React.useState(null);
+  // const navigate = useNavigate();
 
 
   const [expanded1, setExpanded1] = React.useState(false);
@@ -89,7 +86,6 @@ export default function MangaCard(props) {
    const userId = user.id;
    const mangaDbId = props.id;
 
-
   const handleExpandClick1 = () => {
   setExpanded1(!expanded1);
   };
@@ -98,9 +94,6 @@ export default function MangaCard(props) {
   setExpanded2(!expanded2);
   };
 
-   const navigateNewManga = () => {
-    setAnchorElNav(navigate("/registerNewManga"));
-  };
 
    function submitForm(event) {
      event.preventDefault();
@@ -113,7 +106,8 @@ export default function MangaCard(props) {
          star,
          userId,
          mangaDbId,
-       )
+       ),
+        
      );
      console.log("submiting form");
    }
@@ -193,6 +187,10 @@ export default function MangaCard(props) {
                 </CardActions>
                 <Collapse in={expanded2} timeout="auto" unmountOnExit>
                   <CardContent>
+                    <Typography paragraph style={{ marginBottom: 10 }}>
+                      <b>Volumes Owned: </b>
+                      {props.volumesOwned}
+                    </Typography>
                     <Typography paragraph style={{ marginBottom: 10 }}>
                       <b>Are you reading it?:</b> {props.reading ? "Yes" : "No"}
                     </Typography>

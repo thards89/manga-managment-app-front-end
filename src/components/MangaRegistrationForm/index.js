@@ -7,10 +7,10 @@ import Button from "react-bootstrap/Button";
 import { selectUsersManga, selectUser } from "../../store/user/selectors";
 import { selectAllMangas } from "../../store/manga/selectors";
 import fetchMangas from "../../store/manga/actions";
+import { useNavigate } from "react-router-dom";
 
 import FormGroup from "@mui/material/FormGroup";
 import FormLabel from "@mui/material/FormLabel";
-import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
@@ -26,7 +26,6 @@ const themeTitle = createTheme({
 });
 
 export default function MangaRegistrationForm() {
-  const mangas = useSelector(selectUsersManga);
   const user = useSelector(selectUser);
   const userId = user.id;
   
@@ -78,7 +77,11 @@ const onChangeHandler = (text) =>{
     setImgUrl(suggestion.imgUrl)
     setSuggestions([])
   }
-
+  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const navigate = useNavigate();
+  const navigateMyCollection = () => {
+    setAnchorElNav(navigate("/mangas"));
+     };
 
   function submitForm(event) {
     event.preventDefault();
@@ -96,7 +99,8 @@ const onChangeHandler = (text) =>{
         lastVolumeRead,
         collectionComplete,
         star,
-      )
+      ),
+      navigateMyCollection()
     );
     console.log("submiting form");
   }

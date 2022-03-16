@@ -7,16 +7,13 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { useSelector } from "react-redux";
 import { selectToken } from "../../store/user/selectors";
 import LoggedIn from "./LoggedIn";
 import LoggedOut from "./LoggedOut";
-import Navbar from "react-bootstrap/Navbar";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 
@@ -32,7 +29,7 @@ const ResponsiveAppBar = () => {
   const token = useSelector(selectToken);
   const navigate = useNavigate();
 
-    const loginLogoutControls = token ? <LoggedIn /> : <LoggedOut />;
+  const loginLogoutControls = token ? <LoggedIn /> : <LoggedOut />;
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -40,9 +37,9 @@ const ResponsiveAppBar = () => {
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
+  // const handleOpenUserMenu = (event) => {
+  //   setAnchorElUser(event.currentTarget);
+  // };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
@@ -116,6 +113,9 @@ const ResponsiveAppBar = () => {
               <MenuItem onClick={navigateMyCollection}>
                 <Typography textAlign="center">My Collection</Typography>
               </MenuItem>
+              <MenuItem onClick={navigateNewManga}>
+                <Typography textAlign="center">Register New Manga</Typography>
+              </MenuItem>
             </Menu>
           </Box>
           <ThemeProvider theme={themeTitle}>
@@ -153,7 +153,7 @@ const ResponsiveAppBar = () => {
             ) : null}
           </Box>
 
-          <Box sx={{ flexGrow: 0, width: "200px" }}>
+          <Box sx={{ flexGrow: 0, width: "220px" }}>
             {loginLogoutControls}
             <Menu
               sx={{ mt: "40px" }}

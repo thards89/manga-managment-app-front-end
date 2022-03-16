@@ -160,8 +160,8 @@ export default function MyCollection() {
       </Form>
       {/* (//select bars) */}
       {/* filter by */}
-      <div>
-        <FormControl sx={{ m: 10, minWidth: 120, marginLeft: 60 }}>
+      <div className="selectBars">
+        <FormControl sx={{ m: 10, minWidth: 120 }}>
           <InputLabel id="demo-simple-select-standard-label">
             Filter by:{" "}
           </InputLabel>

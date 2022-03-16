@@ -17,10 +17,12 @@ export default function LoggedIn() {
             backgroundColor: "white",
             color: "black",
             borderColor: "black",
+            fontFamily: "Helvetica",
+            fontSize: 13,
           }}
           onClick={() => dispatch(logOut())}
         >
-          Logout
+          <b>Log Out</b>
         </Button>
       </div>
     </>
