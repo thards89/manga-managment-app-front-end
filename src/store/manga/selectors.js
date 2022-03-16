@@ -1,0 +1,1 @@
+export const selectAllMangas = (state) => state.manga.manga

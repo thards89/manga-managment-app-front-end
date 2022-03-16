@@ -1,5 +1,10 @@
 import { NavLink } from "react-router-dom";
 import "./index.css";
+import { updateUserManga } from "../../store/user/actions"
+import { useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { selectUser, selectUsersManga } from "../../store/user/selectors";
+import { selectAllMangas } from "../../store/manga/selectors";
 
 import * as React from "react"; 
 import Button from "@mui/material/Button";
@@ -9,11 +14,9 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
-import { createTheme } from "@mui/material/styles";
 import Collapse from "@mui/material/Collapse";
 import { useState } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -25,6 +28,7 @@ import FormLabel from "@mui/material/FormLabel";
 import { useNavigate } from "react-router-dom";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import { MarkUnreadChatAlt } from "@mui/icons-material";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -47,9 +51,6 @@ const ExpandMoreEdit = styled((props) => {
     duration: theme.transitions.duration.shortest,
   }),
 }));
-
-
-
 
 function Copyright() {
   return (
@@ -76,6 +77,18 @@ export default function MangaCard(props) {
   const [expanded1, setExpanded1] = React.useState(false);
   const [expanded2, setExpanded2] = React.useState(false);
   
+  const dispatch = useDispatch();
+  const [reading, setReading] = useState(props.reading);
+  const [volumesOwned, setVolumesOwned] = useState(props.volumesOwned);
+  const [lastVolumeRead, setLastVolumeRead] = useState(props.lastVolumeRead);
+  const [collectionComplete, setCollectionComplete] = useState(props.collectionComplete);
+  const [star, setStar] = useState(props.star);
+ 
+  
+   const user = useSelector(selectUser);
+   const userId = user.id;
+   const mangaDbId = props.id;
+
 
   const handleExpandClick1 = () => {
   setExpanded1(!expanded1);
@@ -85,16 +98,25 @@ export default function MangaCard(props) {
   setExpanded2(!expanded2);
   };
 
- function submitForm(event) {
-   event.preventDefault();
-   console.log("submiting form");
- }
-
-  
-
    const navigateNewManga = () => {
     setAnchorElNav(navigate("/registerNewManga"));
   };
+
+   function submitForm(event) {
+     event.preventDefault();
+     dispatch(
+       updateUserManga(
+         volumesOwned,
+         reading,
+         lastVolumeRead,
+         collectionComplete,
+         star,
+         userId,
+         mangaDbId,
+       )
+     );
+     console.log("submiting form");
+   }
 
   
   return (
@@ -143,102 +165,10 @@ export default function MangaCard(props) {
                       <b>Publisher:</b> {props.publisher}
                     </p>
                     <p>
-                      <b>Volumes Owned:</b> {props.volumesOwned}/
-                      {props.totalVolumes}
+                      <b>Total Volumes:</b> {props.totalVolumes}
                     </p>
                   </Typography>
                 </CardContent>
-                <CardActions>
-                  {/* toggle Edit */}
-                  <ExpandMoreEdit
-                    expand={expanded1}
-                    onClick={handleExpandClick1}
-                    aria-expanded={expanded1}
-                    aria-label="show more"
-                  >
-                    <span
-                      style={{
-                        fontFamily: "Helvetica",
-                        fontSize: 13,
-                        color: "#1976d2",
-                        fontWeight: 400,
-                      }}
-                    >
-                      EDIT
-                    </span>
-                    <ExpandMoreIcon> </ExpandMoreIcon>
-                  </ExpandMoreEdit>
-                </CardActions>
-                <Collapse in={expanded1} timeout="auto" unmountOnExit>
-                  <CardContent
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      flexWrap: "wrap",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <Typography>
-                      <FormGroup>
-                        <FormLabel>
-                          <b>Are you reading it?:</b>
-                        </FormLabel>
-                        <FormControlLabel
-                          control={<Checkbox defaultChecked />}
-                          label={props.reading ? "Yes" : "No"}
-                        />
-                      </FormGroup>
-                    </Typography>
-                    <Typography paragraph style={{ marginBottom: 10 }}>
-                      <b>Last Volume Read: </b>
-                      <TextField
-                        id="standard-basic"
-                        value={props.lastVolumeRead}
-                        variant="standard"
-                        inputProps={{ min: 0, style: { textAlign: "center" } }}
-                      />
-                    </Typography>
-                    <Typography paragraph style={{ marginBottom: 10 }}>
-                      {" "}
-                      <FormGroup>
-                        <FormLabel>
-                          <b>Is the Collection Complete?:</b>
-                        </FormLabel>
-                        <FormControlLabel
-                          control={<Checkbox defaultChecked />}
-                          label={props.collectionComplete ? "Yes" : "No"}
-                        />
-                      </FormGroup>
-                    </Typography>
-                    <Typography
-                      paragraph
-                      style={{ marginBottom: 10, padding: 10 }}
-                    >
-                      <b>Stars:</b>{" "}
-                      <TextField
-                        style={{ marginBottom: 10 }}
-                        id="standard-basic"
-                        value={props.star}
-                        variant="standard"
-                        inputProps={{ min: 0, style: { textAlign: "center" } }}
-                      />
-                    </Typography>
-                    <FormGroup>
-                      <Button
-                        variant="primary"
-                        type="submit"
-                        onClick={submitForm}
-                        style={{
-                          backgroundColor: "black",
-                          borderBlockColor: "black",
-                          marginBottom: 10,
-                        }}
-                      >
-                        Submit
-                      </Button>
-                    </FormGroup>
-                  </CardContent>
-                </Collapse>
 
                 <CardActions>
                   {/* toggle Details */}
@@ -277,6 +207,123 @@ export default function MangaCard(props) {
                     <Typography paragraph style={{ marginBottom: 10 }}>
                       <b>Stars:</b> {props.star}
                     </Typography>
+                  </CardContent>
+                </Collapse>
+
+                <CardActions>
+                  {/* toggle Edit */}
+                  <ExpandMoreEdit
+                    expand={expanded1}
+                    onClick={handleExpandClick1}
+                    aria-expanded={expanded1}
+                    aria-label="show more"
+                  >
+                    <span
+                      style={{
+                        fontFamily: "Helvetica",
+                        fontSize: 13,
+                        color: "#1976d2",
+                        fontWeight: 400,
+                      }}
+                    >
+                      UPDATE
+                    </span>
+                    <ExpandMoreIcon> </ExpandMoreIcon>
+                  </ExpandMoreEdit>
+                </CardActions>
+                <Collapse in={expanded1} timeout="auto" unmountOnExit>
+                  <CardContent
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      flexWrap: "wrap",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Typography paragraph style={{ marginBottom: 10 }}>
+                      <b>Volumes Owned: </b>
+                      <TextField
+                        id="standard-basic"
+                        value={volumesOwned}
+                        type="number"
+                        variant="standard"
+                        inputProps={{ min: 0, style: { textAlign: "center" } }}
+                        onChange={(e) => {
+                          setVolumesOwned(e.target.value);
+                        }}
+                      />
+                    </Typography>
+                    <FormGroup controlId="formBasicArtist">
+                      <FormGroup>
+                        <FormLabel>Are you reading it?</FormLabel>
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              value={reading}
+                              onChange={() => {
+                                setCollectionComplete(!reading);
+                              }}
+                            />
+                          }
+                          label="Yes"
+                        />
+                      </FormGroup>
+                    </FormGroup>
+                    <Typography paragraph style={{ marginBottom: 10 }}>
+                      <b>Last Volume Read: </b>
+                      <TextField
+                        id="standard-basic"
+                        value={lastVolumeRead}
+                        variant="standard"
+                        inputProps={{ min: 0, style: { textAlign: "center" } }}
+                        onChange={(e) => {
+                          setLastVolumeRead(e.target.value);
+                        }}
+                      />
+                    </Typography>
+                    <Typography paragraph style={{ marginBottom: 10 }}>
+                      {" "}
+                      <FormGroup>
+                        <FormLabel>
+                          <b>Is the Collection Complete?:</b>
+                        </FormLabel>
+                        <FormControlLabel
+                          control={<Checkbox defaultChecked />}
+                          label={props.collectionComplete ? "Yes" : "No"}
+                        />
+                      </FormGroup>
+                    </Typography>
+                    <Typography
+                      paragraph
+                      style={{ marginBottom: 10, padding: 10 }}
+                    >
+                      <b>Stars:</b>{" "}
+                      <TextField
+                        style={{ marginBottom: 10 }}
+                        id="standard-basic"
+                        value={star}
+                        variant="standard"
+                        inputProps={{ min: 0, style: { textAlign: "center" } }}
+                        onChange={(e) => {
+                          setStar(e.target.value);
+                        }}
+                      />
+                    </Typography>
+                    <FormGroup>
+                      <Button
+                        variant="primary"
+                        type="submit"
+                        onClick={submitForm}
+                        style={{
+                          backgroundColor: "black",
+                          borderBlockColor: "black",
+                          color: "white",
+                          marginBottom: 10,
+                        }}
+                      >
+                        Submit
+                      </Button>
+                    </FormGroup>
                   </CardContent>
                 </Collapse>
               </Card>

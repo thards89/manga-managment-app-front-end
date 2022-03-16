@@ -4,7 +4,9 @@ import { Col } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Button from "react-bootstrap/Button";
-import { selectUsersManga } from "../../store/user/selectors";
+import { selectUsersManga, selectUser } from "../../store/user/selectors";
+import { selectAllMangas } from "../../store/manga/selectors";
+import fetchMangas from "../../store/manga/actions";
 
 import FormGroup from "@mui/material/FormGroup";
 import FormLabel from "@mui/material/FormLabel";
@@ -14,7 +16,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-
+import { postManga } from "../../store/user/actions";
 
 const themeTitle = createTheme({
   typography: {
@@ -25,50 +27,84 @@ const themeTitle = createTheme({
 
 export default function MangaRegistrationForm() {
   const mangas = useSelector(selectUsersManga);
+  const user = useSelector(selectUser);
+  const userId = user.id;
+  
+
   const [mangaTitle, setMangaTitle] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [publisher, setPublisher] = useState("");
   const [totalVolumes, setTotalVolumes] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
+  const [imgUrl, setImgUrl] = useState("");
   const [volumesOwned, setVolumesOwned] = useState("");
   const [lastVolumeRead, setVolumeRead] = useState("");
-  const [stars, setStars] = useState("");
+  const [reading, setReading] = useState(false);
+  const [collectionComplete, setCollectionComplete] = useState(false);
+  const [star, setStar] = useState("");
+  const [mangaId, setMangaId] = useState ("")
+  const dispatch = useDispatch();
   
 
 
 useEffect(() => {
-  setMangaTitle(mangas);
-}, [mangas]);
+  setMangaTitle(dispatch(fetchMangas));
+}, [dispatch]);
+
+const mangasDb = useSelector(selectAllMangas);
+console.log("what is my selector", mangasDb);
 
 const onChangeHandler = (text) =>{
   let matches = []
   if (text.length > 0) {
-    matches = mangas.filter(manga => {
-      const regex = new RegExp(`${text}`, "gi")
-      return manga.title.match(regex)
-    })
+    matches = mangasDb.filter((manga) => {
+      const regex = new RegExp(`${text}`, "gi");
+      return manga.title.match(regex);
+    });
   }
-  // console.log("what matches", matches)
+  console.log("what matches", matches)
   setSuggestions(matches)
   setTitle(text)
 }
 
   const onSuggestHandler = (suggestion) => {
     // console.log("suggestion", suggestion)
+    setMangaId(suggestion.id)
     setTitle(suggestion.title)
     setAuthor(suggestion.author);
     setPublisher(suggestion.publisher);
     setTotalVolumes(suggestion.totalVolumes);
-    setImageUrl(suggestion.imgUrl)
+    setImgUrl(suggestion.imgUrl)
     setSuggestions([])
   }
 
 
   function submitForm(event) {
     event.preventDefault();
+    dispatch(
+      postManga(
+        userId,
+        mangaId,
+        title,
+        author,
+        publisher,
+        totalVolumes,
+        imgUrl,
+        volumesOwned,
+        reading,
+        lastVolumeRead,
+        collectionComplete,
+        star,
+      )
+    );
     console.log("submiting form");
+  }
+
+  const checkCollectionComplete = () => {
+    if (volumesOwned < totalVolumes) {
+      return collectionComplete === false
+    }
   }
 
   return (
@@ -113,7 +149,6 @@ const onChangeHandler = (text) =>{
             ))}
         </FormGroup>
         <FormGroup>
-          {/* <FormLabel>Author</FormLabel> */}
           <TextField
             value={author}
             onChange={(event) => setAuthor(event.target.value)}
@@ -126,7 +161,6 @@ const onChangeHandler = (text) =>{
           />
         </FormGroup>
         <FormGroup>
-          {/* <FormLabel>Publisher</FormLabel> */}
           <TextField
             value={publisher}
             onChange={(event) => setPublisher(event.target.value)}
@@ -139,7 +173,6 @@ const onChangeHandler = (text) =>{
           />
         </FormGroup>
         <FormGroup>
-          {/* <FormLabel>Total Volumes</FormLabel> */}
           <TextField
             value={totalVolumes}
             onChange={(event) => setTotalVolumes(event.target.value)}
@@ -149,10 +182,9 @@ const onChangeHandler = (text) =>{
             variant="outlined"
             style={{ marginBottom: "20px" }}
           />
-          {/* <FormLabel>Image Url</FormLabel> */}
           <TextField
-            value={imageUrl}
-            onChange={(event) => setImageUrl(event.target.value)}
+            value={imgUrl}
+            onChange={(event) => setImgUrl(event.target.value)}
             type="text"
             id="outlined-basic"
             label="Image Url"
@@ -161,7 +193,6 @@ const onChangeHandler = (text) =>{
           />
         </FormGroup>
         <FormGroup>
-          {/* <FormLabel>Volumes Owned</FormLabel> */}
           <TextField
             value={volumesOwned}
             onChange={(event) => setVolumesOwned(event.target.value)}
@@ -172,20 +203,29 @@ const onChangeHandler = (text) =>{
             variant="outlined"
             style={{ marginBottom: "20px" }}
           />
+          {volumesOwned > totalVolumes ? (
+            <p>
+              Please insert an amount less or equal than the total of volumes
+            </p>
+          ) : null}
         </FormGroup>
         <FormGroup controlId="formBasicArtist">
-          {/* <FormLabel>Are you Reading this title? </FormLabel> */}
           <FormGroup>
             <FormLabel>Are you reading this title?</FormLabel>
             <FormControlLabel
-              control={<Checkbox defaultChecked />}
+              control={
+                <Checkbox
+                  value={reading}
+                  onChange={() => {
+                    setReading(!reading);
+                  }}
+                />
+              }
               label="Yes"
             />
-            <FormControlLabel control={<Checkbox />} label="No" />
           </FormGroup>
         </FormGroup>
         <FormGroup>
-          {/* <FormLabel>Last Volume Read</FormLabel> */}
           <TextField
             value={lastVolumeRead}
             onChange={(event) => setVolumeRead(event.target.value)}
@@ -196,27 +236,30 @@ const onChangeHandler = (text) =>{
             variant="outlined"
             style={{ marginBottom: "20px" }}
           />
+          {lastVolumeRead > volumesOwned ? (
+            <p>Please insert an amount less than the last volume read</p>
+          ) : null}
         </FormGroup>
         <FormGroup controlId="formBasicArtist">
-          {/* <FormLabel>Is this collection complete? </FormLabel> */}
-          {/* // value={isArtist}
-            // onChange={() => {
-            //   dispatch(updateIsArtist());
-            // }} */}
           <FormGroup>
             <FormLabel>Is this collection complete?</FormLabel>
             <FormControlLabel
-              control={<Checkbox defaultChecked />}
+              control={
+                <Checkbox
+                  value={collectionComplete}
+                  onChange={() => {
+                    setCollectionComplete(!collectionComplete);
+                  }}
+                />
+              }
               label="Yes"
             />
-            <FormControlLabel control={<Checkbox />} label="No" />
           </FormGroup>
         </FormGroup>
         <FormGroup>
-          {/* <FormLabel>Stars</FormLabel> */}
           <TextField
-            value={stars}
-            onChange={(event) => setStars(event.target.value)}
+            value={star}
+            onChange={(event) => setStar(event.target.value)}
             type="text"
             placeholder="From 1 to 5, how many stars would you give to this title?"
             id="outlined-basic"
@@ -224,6 +267,11 @@ const onChangeHandler = (text) =>{
             variant="outlined"
             style={{ marginBottom: "20px" }}
           />
+          {star > 5 ? (
+            <p>
+              Please insert an amount less or equal than 5
+            </p>
+          ) : null}
         </FormGroup>
         <FormGroup>
           <Button

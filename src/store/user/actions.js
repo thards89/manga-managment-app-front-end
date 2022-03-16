@@ -27,33 +27,121 @@ const tokenStillValid = (userWithoutToken) => ({
 
 export const logOut = () => ({ type: LOG_OUT });
 
+export const postUserManga = (data) => {
+  return {
+    type: "user/postUserManga",
+    payload: data
+}};
+
+export const updatedUserManga = (data) => {
+  return {
+    type: "user/updateUserManga",
+    payload: data,
+  };
+};
+
 export function startLoading() {
   return {
     type: "user/loading",
   };
 }
 
-// export function mangaByIdFetched(data) {
-//   console.log(data);
-//   return {
-//     type: "user/mangaByIdFetched",
-//     payload: data,
-//   };
-// }
-
 //thunks
+   export const updateUserManga = (
+     volumesOwned,
+     reading,
+     lastVolumeRead,
+     collectionComplete,
+     star,
+     userId,
+     mangaDbId
+   ) => {
+     return async (dispatch, getState) => {
+       dispatch(appLoading());
+       const token = selectToken(getState());
+       try {
+         const response = await axios.put(
+           `${apiUrl}/manga/updateusermanga`,
+           {
+             volumesOwned,
+             reading,
+             lastVolumeRead,
+             collectionComplete,
+             star,
+             userId,
+             mangaDbId,
+           },
+           { headers: { Authorization: `Bearer ${token}` } }
+         );
 
-// export const fetchMangaById = (mangaId) => {
-//   return async (dispatch, getState) => {
-//     try {
-//       const response = await axios.get(`${apiUrl}/manga/${mangaId}`);
-//       console.log("the response", response.data);
-//       dispatch(mangaByIdFetched(response.data));
-//     } catch (e) {
-//       console.log(e);
-//     }
-//   };
-// };
+         dispatch(updatedUserManga(response.data));
+         dispatch(showMessageWithTimeout("success", true, "Success"));
+         dispatch(appDoneLoading());
+       } catch (error) {
+         if (error.response) {
+           console.log(error.response.data.message);
+           dispatch(setMessage("danger", true, error.response.data.message));
+         } else {
+           console.log(error.message);
+           dispatch(setMessage("danger", true, error.message));
+         }
+         dispatch(appDoneLoading());
+       }
+     };
+   };
+
+    export const postManga = (
+        userId,
+        mangaId,
+        title,
+        author,
+        publisher,
+        totalVolumes,
+        imgUrl,
+        volumesOwned,
+        reading,
+        lastVolumeRead,
+        collectionComplete,
+        star
+      ) => {
+  return async (dispatch, getState) => {
+    dispatch(appLoading());
+    const token = selectToken(getState());
+    try {
+      const response = await axios.post(`${apiUrl}/manga/userManga`, {
+        userId,
+        mangaId,
+        title,
+        author,
+        publisher,
+        totalVolumes,
+        imgUrl,
+        volumesOwned,
+        reading,
+        lastVolumeRead,
+        collectionComplete,
+        star,
+      },
+        {headers: { Authorization: `Bearer ${token}` }},
+      );
+      
+      dispatch(postUserManga(response.data));
+      dispatch(showMessageWithTimeout("success", true, "Success"));
+      dispatch(appDoneLoading());
+ 
+    } catch (error) {
+      if (error.response) {
+        console.log(error.response.data.message);
+        dispatch(setMessage("danger", true, error.response.data.message));
+      } else {
+        console.log(error.message);
+        dispatch(setMessage("danger", true, error.message));
+      }
+      dispatch(appDoneLoading());
+    }
+  };
+};
+
 
 export const signUp = (name, email, password, userName) => {
   return async (dispatch, getState) => {

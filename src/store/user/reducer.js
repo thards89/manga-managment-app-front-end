@@ -16,11 +16,11 @@ export default (state = initialState, action) => {
         loading: true,
       };
     }
-    case "user/mangaByIdFetched": {
-      console.log("reducerUsersManga", action.payload);
+    case "user/updatedUserManga": {
+      console.log("reducerUpdatedUserManga", action.payload);
       return {
         ...state,
-        mangaById: action.payload,
+        userMangaToUpdate: action.payload,
       };
     }
     case LOGIN_SUCCESS:
@@ -32,6 +32,9 @@ export default (state = initialState, action) => {
       return { ...initialState, token: null };
 
     case TOKEN_STILL_VALID:
+      return { ...state, ...action.payload };
+
+    case "user/postUserManga":
       return { ...state, ...action.payload };
 
     default:

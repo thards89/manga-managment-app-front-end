@@ -215,6 +215,7 @@ export default function MyCollection() {
             reading,
             star,
           } = manga.userMangas;
+
           return (
             <MangaCard
               key={id}
