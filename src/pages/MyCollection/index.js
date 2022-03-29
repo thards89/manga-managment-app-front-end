@@ -20,6 +20,7 @@ const themeTitle = createTheme({
   },
 });
 
+
 export default function MyCollection() {
   const mangas = useSelector(selectUsersManga);
   console.log("selector", mangas);
@@ -118,6 +119,17 @@ export default function MyCollection() {
 
 
   if (!mangas) return <div>loading</div>;
+  // if (filteredMangas.length < 1) 
+  // return (
+  //   <div className="afterSignUp">
+  //     <p>Hello Otaku</p>
+  //     <p>You don't have any mangas registered yet.</p>
+  //     <p>
+  //       Please, click on Register Manga on the menu above to start your
+  //       collection.
+  //     </p>
+  //   </div>
+  // );
   return (
     <div>
       {/* top text */}
@@ -128,7 +140,7 @@ export default function MyCollection() {
             variant="h2"
             align="center"
             color="text.primary"
-            padding={5}
+            padding={4}
           >
             My Collection
           </Typography>
@@ -145,7 +157,7 @@ export default function MyCollection() {
         </ThemeProvider>
       </Container>
       {/* (//search bar) */}
-      <Form as={Col} md={{ span: 6, offset: 3 }} className="mt-5">
+      <Form as={Col} md={{ span: 6, offset: 3 }} className="mt-2">
         <Form.Group controlId="formBasicEmail">
           <Form.Label>
             <b>Search</b>
@@ -161,11 +173,12 @@ export default function MyCollection() {
       {/* (//select bars) */}
       {/* filter by */}
       <div className="selectBars">
-        <FormControl sx={{ m: 10, minWidth: 120 }}>
-          <InputLabel id="demo-simple-select-standard-label">
+        <FormControl sx={{ m: 10, minWidth: 120, marginTop: 3 }}>
+          <InputLabel id="demo-simple-select-standard-label" style={{fontSize:15, marginTop: -10}}>
             Filter by:{" "}
           </InputLabel>
           <Select
+            className="selectFilters"
             labelId="demo-simple-select-standard-label"
             id="demo-simple-select-standard"
             value={filter}
@@ -183,11 +196,12 @@ export default function MyCollection() {
           </Select>
         </FormControl>
         {/* sort by */}
-        <FormControl sx={{ m: 10, minWidth: 120 }}>
-          <InputLabel id="demo-simple-select-standard-label">
+        <FormControl sx={{ m: 10, minWidth: 120, marginTop: 3 }}>
+          <InputLabel id="demo-simple-select-standard-label" style={{fontSize:15, marginTop: -10}}>
             Sort by:{" "}
           </InputLabel>
           <Select
+            className="selectFilters"
             labelId="demo-simple-select-standard-label"
             id="demo-simple-select-standard"
             value={sortBy}
@@ -242,24 +256,4 @@ export default function MyCollection() {
 }
 
 
-      //  <select
-      //    onChange={(event) => setFilter(event.target.value)}
-      //    value={filter}
-      //  >
-      //    <option value="">Unfiltered</option>
-      //    <option value="reading">Reading</option>
-      //    <option value="unread">Unread</option>
-      //    <option value="completed">Complete Collection</option>
-      //    <option value="collection_incomplete">Collection Incomplete</option>
-      //  </select>;
-
-        //       Sort by:{" "}
-        // <select
-        //   onChange={(event) => setSortBy(event.target.value)}
-        //   value={sortBy}
-        // >
-        //   <option value="">Unsorted</option>
-        //   <option value="title">Title</option>
-        //   <option value="author">Author</option>
-        //   <option value="publisher">Publisher</option>
-        // </select>
+     

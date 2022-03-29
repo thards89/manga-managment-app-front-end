@@ -124,7 +124,7 @@ export function startLoading() {
       },
         {headers: { Authorization: `Bearer ${token}` }},
       );
-      
+      console.log("postUserManga", response)
       dispatch(postUserManga(response.data));
       dispatch(showMessageWithTimeout("success", true, "Success"));
       dispatch(appDoneLoading());
@@ -132,7 +132,7 @@ export function startLoading() {
     } catch (error) {
       if (error.response) {
         console.log(error.response.data.message);
-        dispatch(setMessage("danger", true, error.response.data.message));
+        dispatch(setMessage("danger", true,"error"));
       } else {
         console.log(error.message);
         dispatch(setMessage("danger", true, error.message));

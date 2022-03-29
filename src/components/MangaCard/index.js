@@ -64,12 +64,6 @@ function Copyright() {
 
 
 export default function MangaCard(props) {
-  // console.log("What are my props", props);
-
-  // const [expanded, setExpanded] = useState(false);
-  // const [anchorElNav, setAnchorElNav] = React.useState(null);
-  // const navigate = useNavigate();
-
 
   const [expanded1, setExpanded1] = React.useState(false);
   const [expanded2, setExpanded2] = React.useState(false);
@@ -136,7 +130,8 @@ export default function MangaCard(props) {
                   display: "flex",
                   flexDirection: "row",
                   flexWrap: "wrap",
-                  maxWidth: 250,
+                  maxWidth: 240,
+                  borderBlockColor: "black"
                 }}
               >
                 <CardMedia
@@ -253,7 +248,8 @@ export default function MangaCard(props) {
                     </Typography>
                     <FormGroup controlId="formBasicArtist">
                       <FormGroup>
-                        <FormLabel>Are you reading it?</FormLabel>
+                         <Typography paragraph style={{ marginBottom: 10 }}>
+                      <b>Are you reading it? </b></Typography>
                         <FormControlLabel
                           control={
                             <Checkbox
@@ -282,9 +278,8 @@ export default function MangaCard(props) {
                     <Typography paragraph style={{ marginBottom: 10 }}>
                       {" "}
                       <FormGroup>
-                        <FormLabel>
-                          <b>Is the Collection Complete?:</b>
-                        </FormLabel>
+                        <Typography paragraph style={{ marginBottom: 10 }}>
+                      <b>Is the collection complete? </b> </Typography>
                         <FormControlLabel
                           control={<Checkbox defaultChecked />}
                           label={props.collectionComplete ? "Yes" : "No"}
@@ -333,36 +328,3 @@ export default function MangaCard(props) {
   );
 }
 
-
-
- // <div className="MangasPage">
-    //   <div className="card" style={{ width: 300 }}>
-    //     <h1>{props.title} </h1>
-    //     <img style={{ width: 200 }} src={props.imgUrl} alt="ïmg"></img>
-    //     <p>Author:{props.author}</p>
-    //     <p>Publisher:{props.publisher}</p>
-    //     <p>
-    //       Volumes Owned: {props.volumesOwned}/{props.totalVolumes}
-    //     </p>
-    //     {props.buttonDetails ? (
-    //       <NavLink to={`/mangas/${props.id}`}>
-    //         <Button>Details</Button>
-    //       </NavLink>
-    //     ) : null}
-    //     {props.details ? (
-    //       <div>
-    //         {/* <p>Total Volumes: {props.totalVolumes}</p> */}
-    //         <p>Are you reading it?: {props.reading ? "Yes" : "No"}</p>
-    //         <p>Last Volume Read: {props.lastVolumeRead}</p>
-    //         <p>
-    //           Is the Collection Complete?:{" "}
-    //           {props.collectionComplete ? "Yes" : "No"}
-    //         </p>
-    //         <p>Stars: {props.star}</p>
-    //         {props.buttonEdit ? (
-    //           <NavLink to={`/`}>
-    //             <Button>Edit</Button>
-    //           </NavLink>
-    //         ) : null}
-    //       </div>
-    //     ) : null}

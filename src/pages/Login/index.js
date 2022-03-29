@@ -17,7 +17,7 @@ export default function SignUp() {
 
   useEffect(() => {
     if (token !== null) {
-      navigate(`/mangas`);
+      navigate(`/`);
     }
   }, [token, navigate]);
 
@@ -33,7 +33,7 @@ export default function SignUp() {
   return (
     <Container>
       <Form as={Col} md={{ span: 6, offset: 3 }} className="mt-5">
-        <h1 className="mt-5 mb-5">Login</h1>
+        <h1 className="mt-5 mb-5" style={{fontFamily:"Great Vibes"}}>Login</h1>
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
           <Form.Control
@@ -55,12 +55,21 @@ export default function SignUp() {
             required
           />
         </Form.Group>
-        <Form.Group className="mt-5">
-          <Button variant="primary" type="submit" onClick={submitForm}>
+        <Form.Group className="mt-4">
+          <Button
+            variant="primary"
+            type="submit"
+            onClick={submitForm}
+            style={{
+            backgroundColor: "black",
+            color: "white",
+            borderColor: "black",
+            }}
+          >
             Log in
           </Button>
         </Form.Group>
-        <Link to="/signup" style={{ textAlign: "center" }}>
+        <Link to="/signup" style={{ textAlign: "center", color: "black" }}>
           Click here to sign up
         </Link>
       </Form>

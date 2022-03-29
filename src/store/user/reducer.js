@@ -6,6 +6,7 @@ const initialState = {
   name: null,
   email: null,
   searchKeyword: "",
+  
 };
 
 export default (state = initialState, action) => {
@@ -35,7 +36,7 @@ export default (state = initialState, action) => {
       return { ...state, ...action.payload };
 
     case "user/postUserManga":
-      return { ...state, ...action.payload };
+      return { ...state, mangaDbs: action.payload };
 
     default:
       return state;

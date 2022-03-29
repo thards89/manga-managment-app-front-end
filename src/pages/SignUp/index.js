@@ -37,7 +37,9 @@ export default function SignUp() {
   return (
     <Container>
       <Form as={Col} md={{ span: 6, offset: 3 }} className="mt-5">
-        <h1 className="mt-5 mb-5">Signup</h1>
+        <h1 className="mt-5 mb-5" style={{ fontFamily: "Great Vibes" }}>
+          Sign Up
+        </h1>
         <Form.Group controlId="formBasicName">
           <Form.Label>Name</Form.Label>
           <Form.Control
@@ -82,12 +84,23 @@ export default function SignUp() {
             required
           />
         </Form.Group>
-        <Form.Group className="mt-5">
-          <Button variant="primary" type="submit" onClick={submitForm}>
+        <Form.Group className="mt-4">
+          <Button
+            variant="primary"
+            type="submit"
+            onClick={submitForm}
+            style={{
+              backgroundColor: "black",
+              color: "white",
+              borderColor: "black",
+            }}
+          >
             Sign up
           </Button>
         </Form.Group>
-        <Link to="/login">Click here to log in</Link>
+        <Link style={{ color: "black" }} to="/login">
+          Click here to log in
+        </Link>
       </Form>
     </Container>
   );

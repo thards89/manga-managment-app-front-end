@@ -12,11 +12,13 @@ import { useNavigate } from "react-router-dom";
 import FormGroup from "@mui/material/FormGroup";
 import FormLabel from "@mui/material/FormLabel";
 import TextField from "@mui/material/TextField";
+import Slider from "@mui/material/Slider";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import { postManga } from "../../store/user/actions";
+
 
 const themeTitle = createTheme({
   typography: {
@@ -85,23 +87,30 @@ const onChangeHandler = (text) =>{
 
   function submitForm(event) {
     event.preventDefault();
-    dispatch(
-      postManga(
-        userId,
-        mangaId,
-        title,
-        author,
-        publisher,
-        totalVolumes,
-        imgUrl,
-        volumesOwned,
-        reading,
-        lastVolumeRead,
-        collectionComplete,
-        star,
-      ),
-      navigateMyCollection()
-    );
+    if (
+      volumesOwned > totalVolumes ||
+      lastVolumeRead > volumesOwned ||
+      star > 6
+    ) {
+      return 
+    } else {
+      dispatch(
+        postManga(
+          userId,
+          mangaId,
+          title,
+          author,
+          publisher,
+          totalVolumes,
+          imgUrl,
+          volumesOwned,
+          reading,
+          lastVolumeRead,
+          collectionComplete,
+          star
+        ),
+        navigateMyCollection()
+      );}
     console.log("submiting form");
   }
 
@@ -134,7 +143,7 @@ const onChangeHandler = (text) =>{
             id="outlined-basic"
             label="Title"
             variant="outlined"
-            style={{ marginBottom: "20px" }}
+            style={{ marginBottom: "15px" }}
             // onBlur={() => {
             //   setTimeout(() => {
             //     setSuggestions([]);
@@ -261,20 +270,22 @@ const onChangeHandler = (text) =>{
           </FormGroup>
         </FormGroup>
         <FormGroup>
-          <TextField
+          Stars
+          <Slider
             value={star}
             onChange={(event) => setStar(event.target.value)}
-            type="text"
+            type="range"
+            min={1}
+            max={5}
+            valueLabelDisplay="auto"
             placeholder="From 1 to 5, how many stars would you give to this title?"
             id="outlined-basic"
             label="Stars"
             variant="outlined"
-            style={{ marginBottom: "20px" }}
+            style={{ marginBottom: "20px", width: "80px" }}
           />
           {star > 5 ? (
-            <p>
-              Please insert an amount less or equal than 5
-            </p>
+            <p>Please insert an amount less or equal than 5</p>
           ) : null}
         </FormGroup>
         <FormGroup>

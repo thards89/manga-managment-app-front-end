@@ -1,0 +1,113 @@
+li {list-style-type: square;
+    padding-left:-20px;
+}
+
+ul {padding-left:1em}
+
+
+
+.index {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-left: 50px;
+    justify-content: space-around;
+    gap: 30px;
+
+}
+
+.suggestion {
+    cursor: pointer;
+    border: 1px solid #d4d4d4;
+    border-bottom: none;
+    border-top: none;
+    z-index: 99;
+  /*position the autocomplete items to be the same width as the container:*/
+    top: 100%;
+    left: 0;
+    right: 0;
+    padding: 10px;
+    cursor: pointer;
+    background-color: #fff; 
+    border-bottom: 1px solid #d4d4d4; 
+   
+}
+
+.suggestion:hover{
+    background-color: rgb(216, 216, 216);
+}
+
+.loggedIn {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    font-family: "Helvetica";
+    font-size: 14px;
+
+}
+
+.selectBars {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1px;
+  
+}
+
+.selectFilters {
+    width: 120px;
+    height: 30px;
+}
+
+.homeContainers {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 1;
+
+}
+
+.HomePagetitle{
+    font-size: 42px;
+    color: rgb(3, 20, 37);
+    /* margin-top: 150px; */
+    padding: 40px;
+    margin-top: 20px;
+    text-align: center;
+
+}
+
+.HomePageFirstText{
+    font-size: 30px;
+    color: rgb(16, 34, 53);
+    padding: 10px;
+    margin: 10px;
+    text-align: center;
+
+}
+
+.HomePageText {
+    font-size: 20px;
+    color:rgb(101, 109, 116);
+    font-family: "Helvetica Neue";
+    font-weight: 400px;
+    padding: 10px;
+    line-height: 35px;
+    
+}
+
+.buttonHomePage {
+    justify-content: center;
+    margin: auto;
+    text-align: center,
+}
+
+.afterSignUp {
+    font-family: "Great Vibes", "cursive";
+    font-size: 20px;
+    text-align: center;
+
+}

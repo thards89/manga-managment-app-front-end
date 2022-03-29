@@ -1,19 +1,35 @@
 import * as React from "react";
 import Paper from "@mui/material/Paper";
+import "../../index.css";
+import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
+
 
 export default function Homepage() {
+  const navigate = useNavigate();
+  const [anchorElNav, setAnchorElNav] = React.useState(null);
 
+  const navigateLogin = () => {
+    setAnchorElNav(navigate("/login"));
+  };
+
+   const navigateSignUp = () => {
+     setAnchorElNav(navigate("/signup"));
+   };
+
+  
 
   return (
     <div className="homeContainers">
       <Paper
         sx={{
-          marginTop: 7,
-          height: 650,
+          marginTop: 2,
+          height: 640,
           width: 600,
           backgroundColor: "#fff",
           fontFamily: "Helvetica Neue",
-          listStyleImage: "none",
+          listStyleType: "none",
+          listStyle: "none",
         }}
       >
         <p className="HomePagetitle">Welcome Otaku!</p>
@@ -22,25 +38,52 @@ export default function Homepage() {
         </p>
         <p className="HomePageText">
           <ul>
-            <li>Register all the titles you have and easily filter them;</li>
+            <li>Register all the titles you have and easily filter them</li>
             <li>
               Manage the mangas you are reading and in which volume you have
               stopped
             </li>
             <li>
               Easily manage how many volumes you own and check which collections
-              are complete
+              are complete.
             </li>
-            <p className="HomePageFirstText">
-              Click on Sign Up or Login to Start!
+            <p className="buttonHomePage">
+              <Button
+                style={{
+                  backgroundColor: "black",
+                  color: "white",
+                  borderColor: "black",
+                  fontFamily: "Helvetica",
+                  fontSize: 13,
+                  marginTop: 30,
+                  marginLeft: 200,
+                  textAlign: "center",
+                }}
+                onClick={navigateSignUp}
+              >
+                <b>Sign Up</b>
+              </Button>{" "}
+              <Button
+                style={{
+                  backgroundColor: "black",
+                  color: "white",
+                  borderColor: "black",
+                  fontFamily: "Helvetica",
+                  fontSize: 13,
+                  marginTop: 30,
+                }}
+                onClick={navigateLogin}
+              >
+                <b>Log In</b>
+              </Button>
             </p>
           </ul>
         </p>
       </Paper>
       <Paper
         sx={{
-          marginTop: 7,
-          height: 650,
+          marginTop: 2,
+          height: 640,
           width: 800,
           backgroundColor: "#fff",
           justifyContent: "center",
@@ -51,7 +94,7 @@ export default function Homepage() {
         <img
           src="library.jpg"
           alt="library"
-          style={{ width: 800, height: 650 }}
+          style={{ width: 800, height: 640, boderRadius: 50 }}
         />
       </Paper>
     </div>
