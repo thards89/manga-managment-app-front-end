@@ -2,6 +2,10 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { selectUsersManga } from "../../store/user/selectors";
 import MangaCard from "../../components/MangaCard";
+import { selectToken } from "../../store/user/selectors";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import {getUserWithStoredToken} from "../../store/user/actions";
 
 import Form from "react-bootstrap/Form";
 import { Col } from "react-bootstrap";
@@ -24,12 +28,16 @@ const themeTitle = createTheme({
 export default function MyCollection() {
   const mangas = useSelector(selectUsersManga);
   console.log("selector", mangas);
+  const token = useSelector(selectToken);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   //states Hook
   const [searchTerm, setSearchTerm] = useState("");
   const [filter, setFilter] = useState("");
   const [sortBy, setSortBy] = useState("");
   const [filteredMangas, setFilteredMangas] = useState([]);
+  const [mangaTitle, setMangaTitle] = useState([]);
 
   useEffect(() => {
     setFilteredMangas(mangas);

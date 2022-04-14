@@ -6,6 +6,8 @@ const initialState = {
   name: null,
   email: null,
   searchKeyword: "",
+  mangaDbs: [],
+  userMangaToUpdate: [],
   
 };
 
@@ -22,6 +24,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         userMangaToUpdate: action.payload,
+        mangaDbs: action.payload.userMangas,
       };
     }
     case LOGIN_SUCCESS:

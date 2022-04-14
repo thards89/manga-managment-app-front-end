@@ -2,6 +2,8 @@ import "./index.css";
 import { updateUserManga } from "../../store/user/actions"
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser } from "../../store/user/selectors";
+import { useEffect, useState } from "react";
+import { selectUsersManga } from "../../store/user/selectors";
 
 
 import * as React from "react"; 
@@ -16,7 +18,6 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 import Collapse from "@mui/material/Collapse";
-import { useState } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { styled } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
@@ -64,6 +65,7 @@ function Copyright() {
 
 
 export default function MangaCard(props) {
+  const mangas = useSelector(selectUsersManga);
 
   const [expanded1, setExpanded1] = React.useState(false);
   const [expanded2, setExpanded2] = React.useState(false);
@@ -74,11 +76,17 @@ export default function MangaCard(props) {
   const [lastVolumeRead, setLastVolumeRead] = useState(props.lastVolumeRead);
   const [collectionComplete, setCollectionComplete] = useState(props.collectionComplete);
   const [star, setStar] = useState(props.star);
+  const [updatedMangas, setUpdatedMangas] = useState()
  
   
    const user = useSelector(selectUser);
    const userId = user.id;
    const mangaDbId = props.id;
+
+   useEffect(() => {
+    setUpdatedMangas();
+  }, []);
+
 
   const handleExpandClick1 = () => {
   setExpanded1(!expanded1);
@@ -101,11 +109,12 @@ export default function MangaCard(props) {
          userId,
          mangaDbId,
        ),
-        
      );
+
      console.log("submiting form");
    }
 
+  
   
   return (
     <div>
@@ -184,21 +193,21 @@ export default function MangaCard(props) {
                   <CardContent>
                     <Typography paragraph style={{ marginBottom: 10 }}>
                       <b>Volumes Owned: </b>
-                      {props.volumesOwned}
+                      {volumesOwned}
                     </Typography>
                     <Typography paragraph style={{ marginBottom: 10 }}>
                       <b>Are you reading it?:</b> {props.reading ? "Yes" : "No"}
                     </Typography>
                     <Typography paragraph style={{ marginBottom: 10 }}>
                       <b>Last Volume Read: </b>
-                      {props.lastVolumeRead}
+                      {lastVolumeRead}
                     </Typography>
                     <Typography paragraph style={{ marginBottom: 10 }}>
                       <b>Is the Collection Complete?:</b>{" "}
-                      {props.collectionComplete ? "Yes" : "No"}
+                      {collectionComplete ? "Yes" : "No"}
                     </Typography>
                     <Typography paragraph style={{ marginBottom: 10 }}>
-                      <b>Stars:</b> {props.star}
+                      <b>Stars:</b> {star}
                     </Typography>
                   </CardContent>
                 </Collapse>
@@ -245,6 +254,11 @@ export default function MangaCard(props) {
                           setVolumesOwned(e.target.value);
                         }}
                       />
+                      {volumesOwned > props.totalVolumes ? (
+            <p>
+              Please insert an amount less or equal than the total of volumes
+            </p>
+          ) : null}
                     </Typography>
                     <FormGroup controlId="formBasicArtist">
                       <FormGroup>
@@ -274,6 +288,9 @@ export default function MangaCard(props) {
                           setLastVolumeRead(e.target.value);
                         }}
                       />
+                      {lastVolumeRead > volumesOwned ? (
+            <p>Please insert an amount less than the last volume owned</p>
+          ) : null}
                     </Typography>
                     <Typography paragraph style={{ marginBottom: 10 }}>
                       {" "}
@@ -301,6 +318,9 @@ export default function MangaCard(props) {
                           setStar(e.target.value);
                         }}
                       />
+                      {star > 5 ? (
+            <p>Please insert an amount less or equal than 5</p>
+          ) : null}
                     </Typography>
                     <FormGroup>
                       <Button

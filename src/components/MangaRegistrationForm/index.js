@@ -8,6 +8,7 @@ import { selectUsersManga, selectUser } from "../../store/user/selectors";
 import { selectAllMangas } from "../../store/manga/selectors";
 import fetchMangas from "../../store/manga/actions";
 import { useNavigate } from "react-router-dom";
+import MenuItem from "@mui/material/MenuItem";
 
 import FormGroup from "@mui/material/FormGroup";
 import FormLabel from "@mui/material/FormLabel";
@@ -18,6 +19,9 @@ import Typography from "@mui/material/Typography";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import { postManga } from "../../store/user/actions";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
 
 
 const themeTitle = createTheme({
@@ -41,11 +45,13 @@ export default function MangaRegistrationForm() {
   const [imgUrl, setImgUrl] = useState("");
   const [volumesOwned, setVolumesOwned] = useState("");
   const [lastVolumeRead, setVolumeRead] = useState("");
-  const [reading, setReading] = useState(false);
+  const [reading, setReading] = useState(null);
   const [collectionComplete, setCollectionComplete] = useState(false);
   const [star, setStar] = useState("");
   const [mangaId, setMangaId] = useState ("")
+  const [filterReading, setFilterReading] = useState (true);
   const dispatch = useDispatch();
+
   
 
 
@@ -222,7 +228,7 @@ const onChangeHandler = (text) =>{
             </p>
           ) : null}
         </FormGroup>
-        <FormGroup controlId="formBasicArtist">
+        {/* <FormGroup controlId="formBasicArtist">
           <FormGroup>
             <FormLabel>Are you reading this title?</FormLabel>
             <FormControlLabel
@@ -237,20 +243,41 @@ const onChangeHandler = (text) =>{
               label="Yes"
             />
           </FormGroup>
-        </FormGroup>
+        </FormGroup> */}
+        <FormControl sx={{ m: 10, minWidth: 120, marginTop: 3 }}>
+          <InputLabel id="demo-simple-select-standard-label" style={{fontSize:15, marginTop: -10}}>
+          Reading?:{" "}
+          </InputLabel>
+          <Select
+            className="selectFilters"
+            labelId="demo-simple-select-standard-label"
+            id="demo-simple-select-standard reading"
+            value={reading}
+            onChange={(event) => setReading(event.target.value)}
+            label="Reading?"
+          >
+            {/* <MenuItem value="">
+              <em>None</em>
+            </MenuItem> */}
+            <MenuItem value={true}>Yes</MenuItem>
+            <MenuItem value={false}>No</MenuItem>
+          </Select>
+        </FormControl>
+
+
         <FormGroup>
           <TextField
             value={lastVolumeRead}
             onChange={(event) => setVolumeRead(event.target.value)}
-            type="text"
+            type="number"
             placeholder="Enter the number of the last volume read"
             id="outlined-basic"
             label="Last Volume Read"
             variant="outlined"
             style={{ marginBottom: "20px" }}
           />
-          {lastVolumeRead > volumesOwned ? (
-            <p>Please insert an amount less than the last volume read</p>
+          {volumesOwned < lastVolumeRead  ? (
+            <p>Please insert an amount less than the last volume owned</p>
           ) : null}
         </FormGroup>
         <FormGroup controlId="formBasicArtist">
