@@ -9,6 +9,7 @@ import { selectAllMangas } from "../../store/manga/selectors";
 import fetchMangas from "../../store/manga/actions";
 import { useNavigate } from "react-router-dom";
 import MenuItem from "@mui/material/MenuItem";
+import Stars from "../Stars"
 
 import FormGroup from "@mui/material/FormGroup";
 import FormLabel from "@mui/material/FormLabel";
@@ -22,6 +23,8 @@ import { postManga } from "../../store/user/actions";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
+import Box from '@mui/material/Box';
+import Rating from '@mui/material/Rating';
 
 
 const themeTitle = createTheme({
@@ -44,12 +47,11 @@ export default function MangaRegistrationForm() {
   const [totalVolumes, setTotalVolumes] = useState("");
   const [imgUrl, setImgUrl] = useState("");
   const [volumesOwned, setVolumesOwned] = useState("");
-  const [lastVolumeRead, setVolumeRead] = useState("");
+  const [lastVolumeRead, setLastVolumeRead] = useState("");
   const [reading, setReading] = useState(null);
   const [collectionComplete, setCollectionComplete] = useState(false);
-  const [star, setStar] = useState("");
+  const [star, setStar] = useState(2);
   const [mangaId, setMangaId] = useState ("")
-  const [filterReading, setFilterReading] = useState (true);
   const dispatch = useDispatch();
 
   
@@ -95,7 +97,7 @@ const onChangeHandler = (text) =>{
     event.preventDefault();
     if (
       volumesOwned > totalVolumes ||
-      lastVolumeRead > volumesOwned ||
+
       star > 6
     ) {
       return 
@@ -121,10 +123,9 @@ const onChangeHandler = (text) =>{
   }
 
   const checkCollectionComplete = () => {
-    if (volumesOwned < totalVolumes) {
-      return collectionComplete === false
-    }
-  }
+  if (volumesOwned === totalVolumes) {
+  return true}
+  else {return false}}
 
   return (
     <Container>
@@ -195,11 +196,12 @@ const onChangeHandler = (text) =>{
           <TextField
             value={totalVolumes}
             onChange={(event) => setTotalVolumes(event.target.value)}
-            type="text"
+            type="number"
             id="outlined-basic"
             label="Total Volumes"
             variant="outlined"
             style={{ marginBottom: "20px" }}
+            inputProps={{ inputMode: 'numeric' }} 
           />
           <TextField
             value={imgUrl}
@@ -212,15 +214,16 @@ const onChangeHandler = (text) =>{
           />
         </FormGroup>
         <FormGroup>
-          <TextField
+          <TextField  
             value={volumesOwned}
-            onChange={(event) => setVolumesOwned(event.target.value)}
-            type="text"
+            onChange={(event) => {setVolumesOwned (parseInt(event.target.value))}}
+            type="number"
             placeholder="Enter how many volumes do you have of this title"
             id="outlined-basic"
             label="Volumes Owned"
             variant="outlined"
             style={{ marginBottom: "20px" }}
+            inputProps={{ inputMode: 'numeric' }} 
           />
           {volumesOwned > totalVolumes ? (
             <p>
@@ -228,22 +231,7 @@ const onChangeHandler = (text) =>{
             </p>
           ) : null}
         </FormGroup>
-        {/* <FormGroup controlId="formBasicArtist">
-          <FormGroup>
-            <FormLabel>Are you reading this title?</FormLabel>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  value={reading}
-                  onChange={() => {
-                    setReading(!reading);
-                  }}
-                />
-              }
-              label="Yes"
-            />
-          </FormGroup>
-        </FormGroup> */}
+ 
         <FormControl sx={{ m: 10, minWidth: 120, marginTop: 3 }}>
           <InputLabel id="demo-simple-select-standard-label" style={{fontSize:15, marginTop: -10}}>
           Reading?:{" "}
@@ -264,56 +252,62 @@ const onChangeHandler = (text) =>{
           </Select>
         </FormControl>
 
-
         <FormGroup>
           <TextField
             value={lastVolumeRead}
-            onChange={(event) => setVolumeRead(event.target.value)}
+            onChange={(event) => {setLastVolumeRead (parseInt(event.target.value))}}
             type="number"
-            placeholder="Enter the number of the last volume read"
+            placeholder="Enter the last volume you have read"
             id="outlined-basic"
             label="Last Volume Read"
             variant="outlined"
             style={{ marginBottom: "20px" }}
+            defaultValue={0}
+            inputProps={{ inputMode: 'numeric' }} 
           />
-          {volumesOwned < lastVolumeRead  ? (
-            <p>Please insert an amount less than the last volume owned</p>
+          {lastVolumeRead > volumesOwned ? (
+            <p>
+              Please insert an amount less or equal than the total of volumes owned
+            </p>
           ) : null}
         </FormGroup>
-        <FormGroup controlId="formBasicArtist">
-          <FormGroup>
-            <FormLabel>Is this collection complete?</FormLabel>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  value={collectionComplete}
-                  onChange={() => {
-                    setCollectionComplete(!collectionComplete);
-                  }}
-                />
-              }
-              label="Yes"
-            />
-          </FormGroup>
-        </FormGroup>
+        
+        
+        <FormControl sx={{ m: 10, minWidth: 120, marginTop: 3 }}>
+          <InputLabel id="demo-simple-select-standard-label" style={{fontSize:15, marginTop: -10}}>
+          Collection Complete?:{" "}
+          </InputLabel>
+          <Select
+            className="selectFilters"
+            labelId="demo-simple-select-standard-label"
+            id="demo-simple-select-standard reading"
+            value={collectionComplete}
+            onChange={(event) => setCollectionComplete(event.target.value)}
+            label="Collection Complete?"
+          >
+            {/* <MenuItem value="">
+              <em>None</em>
+            </MenuItem> */}
+            <MenuItem value={true}>Yes</MenuItem>
+            <MenuItem value={false}>No</MenuItem>
+          </Select>
+        </FormControl>
+
         <FormGroup>
-          Stars
-          <Slider
-            value={star}
-            onChange={(event) => setStar(event.target.value)}
-            type="range"
-            min={1}
-            max={5}
-            valueLabelDisplay="auto"
-            placeholder="From 1 to 5, how many stars would you give to this title?"
-            id="outlined-basic"
-            label="Stars"
-            variant="outlined"
-            style={{ marginBottom: "20px", width: "80px" }}
-          />
-          {star > 5 ? (
-            <p>Please insert an amount less or equal than 5</p>
-          ) : null}
+        <Box
+      sx={{
+        '& > legend': { mt: 2 },
+      }}
+    >
+      <Typography component="legend">Stars</Typography>
+      <Rating
+        name="simple-controlled"
+        value={star}
+        onChange={(event, newValue) => {
+          setStar(newValue);
+        }}
+      />
+    </Box>
         </FormGroup>
         <FormGroup>
           <Button
