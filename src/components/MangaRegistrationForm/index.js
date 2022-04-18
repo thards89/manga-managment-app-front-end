@@ -9,7 +9,7 @@ import { selectAllMangas } from "../../store/manga/selectors";
 import fetchMangas from "../../store/manga/actions";
 import { useNavigate } from "react-router-dom";
 import MenuItem from "@mui/material/MenuItem";
-import Stars from "../Stars";
+
 
 import FormGroup from "@mui/material/FormGroup";
 import FormLabel from "@mui/material/FormLabel";
@@ -48,7 +48,7 @@ export default function MangaRegistrationForm() {
   const [lastVolumeRead, setLastVolumeRead] = useState("");
   const [reading, setReading] = useState(null);
   const [collectionComplete, setCollectionComplete] = useState(false);
-  const [star, setStar] = useState(2);
+  const [star, setStar] = useState(0);
   const [mangaId, setMangaId] = useState("");
   const dispatch = useDispatch();
 
@@ -237,12 +237,11 @@ export default function MangaRegistrationForm() {
           ) : null}
         </FormGroup>
 
-        <FormControl sx={{ m: 10, minWidth: 120, marginTop: 3 }}>
+        <FormControl sx={{ m: 3, minWidth: 150, marginTop: 1, marginLeft: 1 }}>
           <InputLabel
             id="demo-simple-select-standard-label"
-            style={{ fontSize: 15, marginTop: -10 }}
-          >
-            Reading?:{" "}
+            style={{ fontSize: 15, marginTop: -10 }}>
+            Reading?{" "}
           </InputLabel>
           <Select
             className="selectFilters"
@@ -250,11 +249,7 @@ export default function MangaRegistrationForm() {
             id="demo-simple-select-standard reading"
             value={reading}
             onChange={(event) => setReading(event.target.value)}
-            label="Reading?"
-          >
-            {/* <MenuItem value="">
-              <em>None</em>
-            </MenuItem> */}
+            label="Collection Complete?">
             <MenuItem value={true}>Yes</MenuItem>
             <MenuItem value={false}>No</MenuItem>
           </Select>
@@ -283,24 +278,19 @@ export default function MangaRegistrationForm() {
           ) : null}
         </FormGroup>
         
-        <FormControl sx={{ m: 10, minWidth: 120, marginTop: 3 }}>
-        
-
+        <FormControl sx={{ m: 1, minWidth: 200, marginTop: 2 }}>
           <InputLabel
             id="demo-simple-select-standard-label"
-            style={{ fontSize: 15, marginTop: -10 }}
-          >
-            Collection Complete?:{" "}
+            style={{ fontSize: 15, marginTop: -10 }}>
+            Collection Complete?{" "}
           </InputLabel> 
-
           <Select 
             className="selectFilters"
             labelId="demo-simple-select-standard-label"
             id="demo-simple-select-standard reading"
             value={volumesOwned === totalVolumes ? !collectionComplete : collectionComplete}
-            // onChange={checkCollectionComplete}
-            label="Reading?"
-          >
+            label="Collection Complete?"
+            inputProps={{ readOnly: true }}>
             <MenuItem value={true}>Yes</MenuItem>
             <MenuItem value={false}>No</MenuItem>
           </Select>
@@ -309,21 +299,17 @@ export default function MangaRegistrationForm() {
         
     
         <FormGroup>
-          <Box
-            sx={{
-              "& > legend": { mt: 2 },
-            }}
-          >
+          <Box sx={{"& > legend": { mt: 2 }, }}>
             <Typography component="legend">Stars</Typography>
             <Rating
               name="simple-controlled"
               value={star}
               onChange={(event, newValue) => {
-                setStar(newValue);
-              }}
-            />
+               setStar(newValue);
+              }}/>
           </Box>
         </FormGroup>
+
         <FormGroup>
           <Button
             variant="primary"
@@ -333,6 +319,7 @@ export default function MangaRegistrationForm() {
               backgroundColor: "black",
               borderBlockColor: "black",
               marginBottom: 10,
+              marginTop: 10,
             }}
           >
             Submit

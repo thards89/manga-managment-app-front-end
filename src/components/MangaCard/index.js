@@ -26,6 +26,12 @@ import TextField from "@mui/material/TextField";
 import FormLabel from "@mui/material/FormLabel";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import Box from "@mui/material/Box";
+import Rating from "@mui/material/Rating";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 
 
 const ExpandMore = styled((props) => {
@@ -85,6 +91,10 @@ export default function MangaCard(props) {
 
    useEffect(() => {
     setUpdatedMangas();
+  }, []);
+
+  useEffect(() => {
+    setCollectionComplete(collectionComplete)
   }, []);
 
 
@@ -206,9 +216,17 @@ export default function MangaCard(props) {
                       <b>Is the Collection Complete?:</b>{" "}
                       {collectionComplete ? "Yes" : "No"}
                     </Typography>
-                    <Typography paragraph style={{ marginBottom: 10 }}>
-                      <b>Stars:</b> {star}
-                    </Typography>
+                    <FormGroup>
+          <Box sx={{"& > legend": { mt: 1, marginTop:1 }, }}>
+            <Typography component="legend"><b>Stars</b></Typography>
+            <Rating
+              name="simple-controlled"
+              value={star}
+              readOnly
+              />
+          </Box>
+        </FormGroup>
+    
                   </CardContent>
                 </Collapse>
 
@@ -249,9 +267,9 @@ export default function MangaCard(props) {
                         value={volumesOwned}
                         type="number"
                         variant="standard"
-                        inputProps={{ min: 0, style: { textAlign: "center" } }}
+                        inputProps={{ min: 0, style: { textAlign: "center", width: 120 } }}
                         onChange={(e) => {
-                          setVolumesOwned(e.target.value);
+                          setVolumesOwned(parseInt(e.target.value));
                         }}
                       />
                       {volumesOwned > props.totalVolumes ? (
@@ -260,68 +278,72 @@ export default function MangaCard(props) {
             </p>
           ) : null}
                     </Typography>
-                    <FormGroup controlId="formBasicArtist">
-                      <FormGroup>
-                         <Typography paragraph style={{ marginBottom: 10 }}>
-                      <b>Are you reading it? </b></Typography>
-                        <FormControlLabel
-                          control={
-                            <Checkbox
-                              value={reading}
-                              onChange={() => {
-                                setCollectionComplete(!reading);
-                              }}
-                            />
-                          }
-                          label="Yes"
-                        />
-                      </FormGroup>
-                    </FormGroup>
+                    
+                    <FormControl sx={{ m: 3, minWidth: 150, marginTop: 3, marginLeft: 0.5 }}>
+          <InputLabel
+            id="demo-simple-select-standard-label"
+            style={{ fontSize: 15, marginTop: -10 }}>
+            Reading?{" "}
+          </InputLabel>
+          <Select
+            className="selectFilters"
+            labelId="demo-simple-select-standard-label"
+            id="demo-simple-select-standard reading"
+            value={reading}
+            onChange={(event) => setReading(event.target.value)}
+            label="Collection Complete?">
+            <MenuItem value={true}>Yes</MenuItem>
+            <MenuItem value={false}>No</MenuItem>
+          </Select>
+        </FormControl>
+                    
                     <Typography paragraph style={{ marginBottom: 10 }}>
                       <b>Last Volume Read: </b>
                       <TextField
                         id="standard-basic"
                         value={lastVolumeRead}
                         variant="standard"
-                        inputProps={{ min: 0, style: { textAlign: "center" } }}
+                        inputProps={{ min: 0, style: { textAlign: "center", width: 120 } }}
                         onChange={(e) => {
-                          setLastVolumeRead(e.target.value);
+                          setLastVolumeRead(parseInt(e.target.value));
                         }}
                       />
                       {lastVolumeRead > volumesOwned ? (
             <p>Please insert an amount less than the last volume owned</p>
           ) : null}
                     </Typography>
-                    <Typography paragraph style={{ marginBottom: 10 }}>
-                      {" "}
-                      <FormGroup>
-                        <Typography paragraph style={{ marginBottom: 10 }}>
-                      <b>Is the collection complete? </b> </Typography>
-                        <FormControlLabel
-                          control={<Checkbox defaultChecked />}
-                          label={props.collectionComplete ? "Yes" : "No"}
-                        />
-                      </FormGroup>
-                    </Typography>
-                    <Typography
-                      paragraph
-                      style={{ marginBottom: 10, padding: 10 }}
-                    >
-                      <b>Stars:</b>{" "}
-                      <TextField
-                        style={{ marginBottom: 10 }}
-                        id="standard-basic"
-                        value={star}
-                        variant="standard"
-                        inputProps={{ min: 0, style: { textAlign: "center" } }}
-                        onChange={(e) => {
-                          setStar(e.target.value);
-                        }}
-                      />
-                      {star > 5 ? (
-            <p>Please insert an amount less or equal than 5</p>
-          ) : null}
-                    </Typography>
+
+          <FormControl sx={{ m: 1, minWidth: 200, marginTop: 2,  marginLeft:0.5 }}>
+          <InputLabel
+            id="demo-simple-select-standard-label"
+            style={{ fontSize: 15, marginTop: -10 }}>
+            Collection Complete?{" "}
+          </InputLabel> 
+          <Select 
+            className="selectFilters"
+            labelId="demo-simple-select-standard-label"
+            id="demo-simple-select-standard reading"
+            value={volumesOwned === props.totalVolumes ? !collectionComplete : collectionComplete}
+            label="Collection Complete?"
+            inputProps={{ readOnly: true }}>
+            <MenuItem value={true}>Yes</MenuItem>
+            <MenuItem value={false}>No</MenuItem>
+          </Select>
+        </FormControl>
+                    
+        <FormGroup>
+          <Box sx={{"& > legend": { mt: 1, marginTop:1 }, }}>
+            <Typography component="legend"><b>Stars</b></Typography>
+            <Rating
+              name="simple-controlled"
+              value={star}
+              onChange={(event, newValue) => {
+                setStar(newValue)}}
+              />
+          </Box>
+        </FormGroup>
+                    
+                   
                     <FormGroup>
                       <Button
                         variant="primary"

@@ -24,8 +24,8 @@ export default function Homepage() {
       <Paper
         sx={{
           marginTop: 2,
-          height: 640,
-          width: 600,
+          height: 600,
+          width: 550,
           backgroundColor: "#fff",
           fontFamily: "Helvetica Neue",
           listStyleType: "none",
@@ -83,8 +83,8 @@ export default function Homepage() {
       <Paper
         sx={{
           marginTop: 2,
-          height: 640,
-          width: 800,
+          height: 600,
+          width: 400,
           backgroundColor: "#fff",
           justifyContent: "center",
           alignItems: "center",
