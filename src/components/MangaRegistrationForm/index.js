@@ -9,7 +9,7 @@ import { selectAllMangas } from "../../store/manga/selectors";
 import fetchMangas from "../../store/manga/actions";
 import { useNavigate } from "react-router-dom";
 import MenuItem from "@mui/material/MenuItem";
-import Stars from "../Stars"
+import Stars from "../Stars";
 
 import FormGroup from "@mui/material/FormGroup";
 import FormLabel from "@mui/material/FormLabel";
@@ -23,9 +23,8 @@ import { postManga } from "../../store/user/actions";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
-import Box from '@mui/material/Box';
-import Rating from '@mui/material/Rating';
-
+import Box from "@mui/material/Box";
+import Rating from "@mui/material/Rating";
 
 const themeTitle = createTheme({
   typography: {
@@ -37,7 +36,6 @@ const themeTitle = createTheme({
 export default function MangaRegistrationForm() {
   const user = useSelector(selectUser);
   const userId = user.id;
-  
 
   const [mangaTitle, setMangaTitle] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
@@ -51,57 +49,64 @@ export default function MangaRegistrationForm() {
   const [reading, setReading] = useState(null);
   const [collectionComplete, setCollectionComplete] = useState(false);
   const [star, setStar] = useState(2);
-  const [mangaId, setMangaId] = useState ("")
+  const [mangaId, setMangaId] = useState("");
   const dispatch = useDispatch();
 
-  
+  useEffect(() => {
+    setMangaTitle(dispatch(fetchMangas));
+  }, [dispatch]);
+
+  useEffect(() => {
+    setCollectionComplete(collectionComplete)
+  }, []);
 
 
-useEffect(() => {
-  setMangaTitle(dispatch(fetchMangas));
-}, [dispatch]);
+  const mangasDb = useSelector(selectAllMangas);
+  console.log("what is my selector", mangasDb);
 
-const mangasDb = useSelector(selectAllMangas);
-console.log("what is my selector", mangasDb);
-
-const onChangeHandler = (text) =>{
-  let matches = []
-  if (text.length > 0) {
-    matches = mangasDb.filter((manga) => {
-      const regex = new RegExp(`${text}`, "gi");
-      return manga.title.match(regex);
-    });
-  }
-  console.log("what matches", matches)
-  setSuggestions(matches)
-  setTitle(text)
-}
+  const onChangeHandler = (text) => {
+    let matches = [];
+    if (text.length > 0) {
+      matches = mangasDb.filter((manga) => {
+        const regex = new RegExp(`${text}`, "gi");
+        return manga.title.match(regex);
+      });
+    }
+    console.log("what matches", matches);
+    setSuggestions(matches);
+    setTitle(text);
+  };
 
   const onSuggestHandler = (suggestion) => {
     // console.log("suggestion", suggestion)
-    setMangaId(suggestion.id)
-    setTitle(suggestion.title)
+    setMangaId(suggestion.id);
+    setTitle(suggestion.title);
     setAuthor(suggestion.author);
     setPublisher(suggestion.publisher);
     setTotalVolumes(suggestion.totalVolumes);
-    setImgUrl(suggestion.imgUrl)
-    setSuggestions([])
-  }
+    setImgUrl(suggestion.imgUrl);
+    setSuggestions([]);
+  };
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const navigate = useNavigate();
   const navigateMyCollection = () => {
     setAnchorElNav(navigate("/mangas"));
-     };
+  };
+
+  // const checkCollectionComplete = () => {
+  //   if (volumesOwned === totalVolumes) { 
+  //     setCollectionComplete(!collectionComplete)
+  //   } else {
+  //     setCollectionComplete(collectionComplete)
+  //   }
+  // };
 
   function submitForm(event) {
     event.preventDefault();
-    if (
-      volumesOwned > totalVolumes ||
-
-      star > 6
-    ) {
-      return 
+    if (volumesOwned > totalVolumes || star > 6) {
+      return;
     } else {
+      
       dispatch(
         postManga(
           userId,
@@ -115,17 +120,15 @@ const onChangeHandler = (text) =>{
           reading,
           lastVolumeRead,
           collectionComplete,
-          star
+          star,
         ),
         navigateMyCollection()
-      );}
+      );
+    }
     console.log("submiting form");
   }
 
-  const checkCollectionComplete = () => {
-  if (volumesOwned === totalVolumes) {
-  return true}
-  else {return false}}
+
 
   return (
     <Container>
@@ -201,7 +204,7 @@ const onChangeHandler = (text) =>{
             label="Total Volumes"
             variant="outlined"
             style={{ marginBottom: "20px" }}
-            inputProps={{ inputMode: 'numeric' }} 
+            inputProps={{ inputMode: "numeric" }}
           />
           <TextField
             value={imgUrl}
@@ -214,16 +217,18 @@ const onChangeHandler = (text) =>{
           />
         </FormGroup>
         <FormGroup>
-          <TextField  
+          <TextField
             value={volumesOwned}
-            onChange={(event) => {setVolumesOwned (parseInt(event.target.value))}}
+            onChange={(event) => {
+              setVolumesOwned(parseInt(event.target.value));
+            }}
             type="number"
             placeholder="Enter how many volumes do you have of this title"
             id="outlined-basic"
             label="Volumes Owned"
             variant="outlined"
             style={{ marginBottom: "20px" }}
-            inputProps={{ inputMode: 'numeric' }} 
+            inputProps={{ inputMode: "numeric" }}
           />
           {volumesOwned > totalVolumes ? (
             <p>
@@ -231,10 +236,13 @@ const onChangeHandler = (text) =>{
             </p>
           ) : null}
         </FormGroup>
- 
+
         <FormControl sx={{ m: 10, minWidth: 120, marginTop: 3 }}>
-          <InputLabel id="demo-simple-select-standard-label" style={{fontSize:15, marginTop: -10}}>
-          Reading?:{" "}
+          <InputLabel
+            id="demo-simple-select-standard-label"
+            style={{ fontSize: 15, marginTop: -10 }}
+          >
+            Reading?:{" "}
           </InputLabel>
           <Select
             className="selectFilters"
@@ -255,7 +263,9 @@ const onChangeHandler = (text) =>{
         <FormGroup>
           <TextField
             value={lastVolumeRead}
-            onChange={(event) => {setLastVolumeRead (parseInt(event.target.value))}}
+            onChange={(event) => {
+              setLastVolumeRead(parseInt(event.target.value));
+            }}
             type="number"
             placeholder="Enter the last volume you have read"
             id="outlined-basic"
@@ -263,51 +273,56 @@ const onChangeHandler = (text) =>{
             variant="outlined"
             style={{ marginBottom: "20px" }}
             defaultValue={0}
-            inputProps={{ inputMode: 'numeric' }} 
+            inputProps={{ inputMode: "numeric" }}
           />
           {lastVolumeRead > volumesOwned ? (
             <p>
-              Please insert an amount less or equal than the total of volumes owned
+              Please insert an amount less or equal than the total of volumes
+              owned
             </p>
           ) : null}
         </FormGroup>
         
-        
         <FormControl sx={{ m: 10, minWidth: 120, marginTop: 3 }}>
-          <InputLabel id="demo-simple-select-standard-label" style={{fontSize:15, marginTop: -10}}>
-          Collection Complete?:{" "}
-          </InputLabel>
-          <Select
+        
+
+          <InputLabel
+            id="demo-simple-select-standard-label"
+            style={{ fontSize: 15, marginTop: -10 }}
+          >
+            Collection Complete?:{" "}
+          </InputLabel> 
+
+          <Select 
             className="selectFilters"
             labelId="demo-simple-select-standard-label"
             id="demo-simple-select-standard reading"
-            value={collectionComplete}
-            onChange={(event) => setCollectionComplete(event.target.value)}
-            label="Collection Complete?"
+            value={volumesOwned === totalVolumes ? !collectionComplete : collectionComplete}
+            // onChange={checkCollectionComplete}
+            label="Reading?"
           >
-            {/* <MenuItem value="">
-              <em>None</em>
-            </MenuItem> */}
             <MenuItem value={true}>Yes</MenuItem>
             <MenuItem value={false}>No</MenuItem>
           </Select>
         </FormControl>
-
+        
+        
+    
         <FormGroup>
-        <Box
-      sx={{
-        '& > legend': { mt: 2 },
-      }}
-    >
-      <Typography component="legend">Stars</Typography>
-      <Rating
-        name="simple-controlled"
-        value={star}
-        onChange={(event, newValue) => {
-          setStar(newValue);
-        }}
-      />
-    </Box>
+          <Box
+            sx={{
+              "& > legend": { mt: 2 },
+            }}
+          >
+            <Typography component="legend">Stars</Typography>
+            <Rating
+              name="simple-controlled"
+              value={star}
+              onChange={(event, newValue) => {
+                setStar(newValue);
+              }}
+            />
+          </Box>
         </FormGroup>
         <FormGroup>
           <Button
