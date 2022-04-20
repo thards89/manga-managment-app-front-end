@@ -19,7 +19,7 @@ import Select from "@mui/material/Select";
 
 const themeTitle = createTheme({
   typography: {
-    fontSize: "13",
+    fontSize: "10",
     fontFamily: ["Great Vibes", "cursive"].join(","),
   },
 });

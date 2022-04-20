@@ -3,9 +3,12 @@ import Paper from "@mui/material/Paper";
 import "../../index.css";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
+import Card from "@mui/material/Card";
+import Image from './library.jpg'
 
 
 export default function Homepage() {
+ 
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
 
@@ -17,21 +20,29 @@ export default function Homepage() {
      setAnchorElNav(navigate("/signup"));
    };
 
-  
+//    const styles = {
+//     cardContainer: {
+//         backgroundImage: `url(${Image})`,
+        
+//     }
+// };
+
 
   return (
     <div className="homeContainers">
-      <Paper
+      <Card className="cardHomePage"
         sx={{
           marginTop: 2,
-          height: 600,
-          width: 550,
+          height: '100%',
+          width: '90%',
           backgroundColor: "#fff",
           fontFamily: "Helvetica Neue",
           listStyleType: "none",
           listStyle: "none",
         }}
+        // style={styles.cardContainer}
       >
+        <div className="textBox">
         <p className="HomePagetitle">Welcome Otaku!</p>
         <p className="HomePageFirstText">
           In this website you can manage all your manga collection!{" "}
@@ -56,7 +67,6 @@ export default function Homepage() {
                   fontFamily: "Helvetica",
                   fontSize: 13,
                   marginTop: 30,
-                  marginLeft: 200,
                   textAlign: "center",
                 }}
                 onClick={navigateSignUp}
@@ -79,42 +89,27 @@ export default function Homepage() {
             </p>
           </ul>
         </p>
-      </Paper>
-      <Paper
+        </div>
+      </Card>
+  
+      {/* <Card 
         sx={{
           marginTop: 2,
-          height: 600,
-          width: 400,
+          height: 580,
+          width: '50%',
           backgroundColor: "#fff",
           justifyContent: "center",
           alignItems: "center",
-          display: "flex",
+          
+
         }}
-      >
-        <img
+      > */}
+        {/* <img className="imgHomePage"
           src="library.jpg"
           alt="library"
-          style={{ width: 800, height: 640, boderRadius: 50 }}
-        />
-      </Paper>
+          /> */}
+         
     </div>
   );
 }
 
-//   <div className="card">
-//     <h4>Welcome Otaku!</h4>
-//     <p className="card-text">In this website you can manage all your manga collection! </p>
-//     <p>
-//       Register all the titles you have Manage what you have read, which
-//       colletions are complete, and how much is left to complete it.
-//     </p>
-//     <p>
-//       {" "}
-//       Interact with other anime fans, creating a Manga Reading Club, selling
-//       the mangas you dont`t want anymore or exchange it.
-//     </p>
-//     <p>
-//       <button>Sign In</button>
-//       <button>Login</button>
-//     </p>
-//   </div>

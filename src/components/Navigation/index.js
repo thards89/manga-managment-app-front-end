@@ -19,7 +19,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const themeTitle = createTheme({
   typography: {
-    fontSize: "20",
+    fontSize: "16",
     fontFamily: ['Great Vibes', 'cursive'].join(","),
   },
 });
@@ -121,9 +121,8 @@ const ResponsiveAppBar = () => {
           <ThemeProvider theme={themeTitle}>
             <Typography
               variant="h6"
-              // noWrap
               component="div"
-              sx={{ flexGrow: 2, display: { xs: "flex", md: "none" } }}
+              sx={{ flexGrow: 2, lineHeight:1, fontSize:18, display: { xs: "flex", md: "none" } }}
             >
               My Manga Collection
             </Typography>

@@ -1,4 +1,3 @@
-import "./index.css";
 import { updateUserManga } from "../../store/user/actions"
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser } from "../../store/user/selectors";

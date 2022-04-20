@@ -1,5 +1,7 @@
-li {list-style-type: square;
-    padding-left:-20px;
+
+
+li {list-style-type: none;
+    padding-left:0px;
 }
 
 ul {padding-left:1em}
@@ -65,9 +67,10 @@ ul {padding-left:1em}
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    flex-wrap: wrap;
-    gap: 1;
-    width: 50%;
+    gap: 3;
+   
+    
+
 
 }
 
@@ -75,11 +78,14 @@ ul {padding-left:1em}
     font-size: 42px;
     color: rgb(3, 20, 37);
     /* margin-top: 150px; */
-    padding: 40px;
+    padding: 30px;
     margin-top: 20px;
     text-align: center;
 
+
+
 }
+
 
 .HomePageFirstText{
     font-size: 30px;
@@ -88,22 +94,36 @@ ul {padding-left:1em}
     margin: 10px;
     text-align: center;
 
+
 }
 
 .HomePageText {
     font-size: 20px;
     color:rgb(101, 109, 116);
-    font-family: "Helvetica Neue";
-    font-weight: 400px;
+    /* font-family: "Helvetica Neue"; */
+    font-weight: 520;
     padding: 10px;
-    line-height: 35px;
+    line-height: 60px;
+    text-align: center;
+
     
 }
 
 .buttonHomePage {
     justify-content: center;
     margin: auto;
-    text-align: center,
+    text-align: center;
+    margin-left: 200px,
+}
+
+.imgHomePage {
+    display: flex;
+    margin-top: 2;
+    height: 580;
+    width: '50%';
+    background-color: "#fff";
+    justify-content: "center";
+    align-items: "center";
 }
 
 .afterSignUp {
@@ -112,4 +132,37 @@ ul {padding-left:1em}
     text-align: center;
 
 }
+
+
+@media only screen and (max-width: 455px) {
+    .HomePagetitle { font-size: 25px }
+    .HomePageFirstText { font-size: 20px }
+    .HomePageText { font-size: 18px }
+    .homeContainers {display: block;
+        width: 250%;
+        flex-wrap: wrap;
+        flex-direction: column;
+        justify-content: start;
+    }
+    .imgHomePage {display:none}
+
+}
+
+@media only screen and (max-width: 454px) {
+    .HomePagetitle { font-size: 25px }
+    .HomePageFirstText { font-size: 20px }
+    .HomePageText { font-size: 18px }
+    .homeContainers {display: flex;
+        width: 250%;
+        flex-wrap: wrap;
+        justify-content: start;
+        flex-direction: column;
+    }
+    .imgHomePage {display:none}
+
+}
+
+
+
+
 
