@@ -1,5 +1,10 @@
 /* eslint-disable import/no-anonymous-default-export */
-import { LOG_OUT, LOGIN_SUCCESS, TOKEN_STILL_VALID,HANDLE_SEARCH_ICONS } from "./actions";
+import {
+  LOG_OUT,
+  LOGIN_SUCCESS,
+  TOKEN_STILL_VALID,
+  HANDLE_SEARCH_ICONS,
+} from "./actions";
 
 const initialState = {
   token: localStorage.getItem("token"),
@@ -8,7 +13,6 @@ const initialState = {
   searchKeyword: "",
   mangaDbs: [],
   userMangaToUpdate: [],
-  
 };
 
 export default (state = initialState, action) => {
@@ -45,4 +49,3 @@ export default (state = initialState, action) => {
       return state;
   }
 };
-

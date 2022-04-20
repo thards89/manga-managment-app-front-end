@@ -12,7 +12,7 @@ export default function SignUp() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const[userName, setUserName] = useState("");
+  const [userName, setUserName] = useState("");
   const dispatch = useDispatch();
   const token = useSelector(selectToken);
   const navigate = useNavigate();

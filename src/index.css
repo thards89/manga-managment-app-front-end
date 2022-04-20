@@ -103,7 +103,7 @@ ul {padding-left:1em}
     /* font-family: "Helvetica Neue"; */
     font-weight: 520;
     padding: 10px;
-    line-height: 60px;
+    line-height: 45px;
     text-align: center;
 
     
@@ -118,9 +118,9 @@ ul {padding-left:1em}
 
 .imgHomePage {
     display: flex;
-    margin-top: 2;
-    height: 580;
-    width: '50%';
+    margin-top: 5;
+    height:593px;
+    width: 650px;
     background-color: "#fff";
     justify-content: "center";
     align-items: "center";
@@ -134,19 +134,26 @@ ul {padding-left:1em}
 }
 
 
-@media only screen and (max-width: 455px) {
+@media only screen and (max-width: 750px) {
     .HomePagetitle { font-size: 25px }
     .HomePageFirstText { font-size: 20px }
     .HomePageText { font-size: 18px }
-    .homeContainers {display: block;
-        width: 250%;
-        flex-wrap: wrap;
-        flex-direction: column;
-        justify-content: start;
+    .homeContainers img {display:none
     }
     .imgHomePage {display:none}
 
 }
+
+@media only screen and (max-width: 950px) {
+    .HomePagetitle { font-size: 25px }
+    .HomePageFirstText { font-size: 20px }
+    .HomePageText { font-size: 18px }
+    .homeContainers img {display:none
+    }
+    .imgHomePage {display:none}
+
+}
+
 
 @media only screen and (max-width: 454px) {
     .HomePagetitle { font-size: 25px }
@@ -163,6 +170,36 @@ ul {padding-left:1em}
 }
 
 
+@media only screen and (max-width: 400px) {
+    .HomePagetitle { font-size: 25px; margin-top: 0px; padding: 10px;}
+    .HomePageFirstText { font-size: 20px; margin-top: 0,5px;padding: 10px; }
+    .HomePageText { font-size: 18px }
+    .homeContainers {display: flex;
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: start;
+        flex-direction: column;
+        margin-top: 0.1px;
+        
+    }
+    .imgHomePage {display:none}
 
+}
+
+@media only screen and (max-width: 450px) {
+    .HomePagetitle { font-size: 25px; margin-top: 0px; padding: 10px;}
+    .HomePageFirstText { font-size: 20px; margin-top: 0,5px;padding: 10px; }
+    .HomePageText { font-size: 18px }
+    .homeContainers {display: flex;
+        width: 110%;
+        flex-wrap: wrap;
+        justify-content: start;
+        flex-direction: column;
+        margin-top: 0.1px;
+        
+    }
+    .imgHomePage {display:none}
+
+}
 
 

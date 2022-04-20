@@ -1,14 +1,14 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
-import MenuItem from '@mui/material/MenuItem';
+import * as React from "react";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import Menu from "@mui/material/Menu";
+import MenuIcon from "@mui/icons-material/Menu";
+import Container from "@mui/material/Container";
+import Button from "@mui/material/Button";
+import MenuItem from "@mui/material/MenuItem";
 import { useSelector } from "react-redux";
 import { selectToken } from "../../store/user/selectors";
 import LoggedIn from "./LoggedIn";
@@ -16,14 +16,12 @@ import LoggedOut from "./LoggedOut";
 import { useNavigate } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-
 const themeTitle = createTheme({
   typography: {
     fontSize: "16",
-    fontFamily: ['Great Vibes', 'cursive'].join(","),
+    fontFamily: ["Great Vibes", "cursive"].join(","),
   },
 });
-
 
 const ResponsiveAppBar = () => {
   const token = useSelector(selectToken);
@@ -37,9 +35,6 @@ const ResponsiveAppBar = () => {
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-  // const handleOpenUserMenu = (event) => {
-  //   setAnchorElUser(event.currentTarget);
-  // };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
@@ -50,22 +45,19 @@ const ResponsiveAppBar = () => {
   };
 
   const navigateHomePage = () => {
-    setAnchorElNav(navigate("/"))
-  }
+    setAnchorElNav(navigate("/"));
+  };
 
   const navigateMyCollection = () => {
     setAnchorElNav(navigate("/mangas"));
-    };
+  };
 
   const navigateNewManga = () => {
     setAnchorElNav(navigate("/registerNewManga"));
   };
 
   return (
-    <AppBar
-      position="sticky"
-      sx={{ bgcolor: "black" }}
-    >
+    <AppBar position="sticky" sx={{ bgcolor: "black" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <ThemeProvider theme={themeTitle}>
@@ -122,7 +114,12 @@ const ResponsiveAppBar = () => {
             <Typography
               variant="h6"
               component="div"
-              sx={{ flexGrow: 2, lineHeight:1, fontSize:18, display: { xs: "flex", md: "none" } }}
+              sx={{
+                flexGrow: 2,
+                lineHeight: 1,
+                fontSize: 18,
+                display: { xs: "flex", md: "none" },
+              }}
             >
               My Manga Collection
             </Typography>
@@ -175,5 +172,5 @@ const ResponsiveAppBar = () => {
       </Container>
     </AppBar>
   );
-};;
+};
 export default ResponsiveAppBar;

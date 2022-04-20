@@ -12,7 +12,6 @@ export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const TOKEN_STILL_VALID = "TOKEN_STILL_VALID";
 export const LOG_OUT = "LOG_OUT";
 
-
 const loginSuccess = (userWithToken) => {
   return {
     type: LOGIN_SUCCESS,
@@ -30,8 +29,9 @@ export const logOut = () => ({ type: LOG_OUT });
 export const postUserManga = (data) => {
   return {
     type: "user/postUserManga",
-    payload: data
-}};
+    payload: data,
+  };
+};
 
 export const updatedUserManga = (data) => {
   return {
@@ -47,92 +47,40 @@ export function startLoading() {
 }
 
 //thunks
-   export const updateUserManga = (
-     volumesOwned,
-     reading,
-     lastVolumeRead,
-     collectionComplete,
-     star,
-     userId,
-     mangaDbId
-   ) => {
-     return async (dispatch, getState) => {
-       dispatch(appLoading());
-       const token = selectToken(getState());
-       try {
-         const response = await axios.put(
-           `${apiUrl}/manga/updateusermanga`,
-           {
-             volumesOwned,
-             reading,
-             lastVolumeRead,
-             collectionComplete,
-             star,
-             userId,
-             mangaDbId,
-           },
-           { headers: { Authorization: `Bearer ${token}` } }
-         );
-
-         dispatch(updatedUserManga(response.data));
-         dispatch(showMessageWithTimeout("success", true, "Success"));
-         dispatch(appDoneLoading());
-       } catch (error) {
-         if (error.response) {
-           console.log(error.response.data.message);
-           dispatch(setMessage("danger", true, error.response.data.message));
-         } else {
-           console.log(error.message);
-           dispatch(setMessage("danger", true, error.message));
-         }
-         dispatch(appDoneLoading());
-       }
-     };
-   };
-
-    export const postManga = (
-        userId,
-        mangaId,
-        title,
-        author,
-        publisher,
-        totalVolumes,
-        imgUrl,
-        volumesOwned,
-        reading,
-        lastVolumeRead,
-        collectionComplete,
-        star
-      ) => {
+export const updateUserManga = (
+  volumesOwned,
+  reading,
+  lastVolumeRead,
+  collectionComplete,
+  star,
+  userId,
+  mangaDbId
+) => {
   return async (dispatch, getState) => {
     dispatch(appLoading());
     const token = selectToken(getState());
     try {
-      const response = await axios.post(`${apiUrl}/manga/userManga`, {
-        userId,
-        mangaId,
-        title,
-        author,
-        publisher,
-        totalVolumes,
-        imgUrl,
-        volumesOwned,
-        reading,
-        lastVolumeRead,
-        collectionComplete,
-        star,
-      },
-        {headers: { Authorization: `Bearer ${token}` }},
+      const response = await axios.put(
+        `${apiUrl}/manga/updateusermanga`,
+        {
+          volumesOwned,
+          reading,
+          lastVolumeRead,
+          collectionComplete,
+          star,
+          userId,
+          mangaDbId,
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
       );
-      console.log("postUserManga", response)
-      dispatch(postUserManga(response.data));
+
+      dispatch(updatedUserManga(response.data));
       dispatch(showMessageWithTimeout("success", true, "Success"));
       dispatch(appDoneLoading());
- 
     } catch (error) {
       if (error.response) {
         console.log(error.response.data.message);
-        dispatch(setMessage("danger", true,"error"));
+        dispatch(setMessage("danger", true, error.response.data.message));
       } else {
         console.log(error.message);
         dispatch(setMessage("danger", true, error.message));
@@ -142,6 +90,58 @@ export function startLoading() {
   };
 };
 
+export const postManga = (
+  userId,
+  mangaId,
+  title,
+  author,
+  publisher,
+  totalVolumes,
+  imgUrl,
+  volumesOwned,
+  reading,
+  lastVolumeRead,
+  collectionComplete,
+  star
+) => {
+  return async (dispatch, getState) => {
+    dispatch(appLoading());
+    const token = selectToken(getState());
+    try {
+      const response = await axios.post(
+        `${apiUrl}/manga/userManga`,
+        {
+          userId,
+          mangaId,
+          title,
+          author,
+          publisher,
+          totalVolumes,
+          imgUrl,
+          volumesOwned,
+          reading,
+          lastVolumeRead,
+          collectionComplete,
+          star,
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      console.log("postUserManga", response);
+      dispatch(postUserManga(response.data));
+      dispatch(showMessageWithTimeout("success", true, "Success"));
+      dispatch(appDoneLoading());
+    } catch (error) {
+      if (error.response) {
+        console.log(error.response.data.message);
+        dispatch(setMessage("danger", true, "error"));
+      } else {
+        console.log(error.message);
+        dispatch(setMessage("danger", true, error.message));
+      }
+      dispatch(appDoneLoading());
+    }
+  };
+};
 
 export const signUp = (name, email, password, userName) => {
   return async (dispatch, getState) => {

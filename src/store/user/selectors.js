@@ -11,4 +11,3 @@ export const selectSpecificManga = (id) => (state) => {
     state.user.mangaDbs.find((manga) => parseInt(manga.id) === parseInt(id))
   );
 };
-

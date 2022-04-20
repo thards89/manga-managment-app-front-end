@@ -33,7 +33,9 @@ export default function SignUp() {
   return (
     <Container>
       <Form as={Col} md={{ span: 6, offset: 3 }} className="mt-5">
-        <h1 className="mt-5 mb-5" style={{fontFamily:"Great Vibes"}}>Login</h1>
+        <h1 className="mt-5 mb-5" style={{ fontFamily: "Great Vibes" }}>
+          Login
+        </h1>
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
           <Form.Control
@@ -61,9 +63,9 @@ export default function SignUp() {
             type="submit"
             onClick={submitForm}
             style={{
-            backgroundColor: "black",
-            color: "white",
-            borderColor: "black",
+              backgroundColor: "black",
+              color: "white",
+              borderColor: "black",
             }}
           >
             Log in

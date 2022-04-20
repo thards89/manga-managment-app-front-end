@@ -1,6 +1,5 @@
 const initialState = {
   loading: true,
-  
 };
 
 export default function mangaSliceReducer(state = initialState, action) {

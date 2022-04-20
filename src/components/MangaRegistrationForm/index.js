@@ -10,15 +10,10 @@ import fetchMangas from "../../store/manga/actions";
 import { useNavigate } from "react-router-dom";
 import MenuItem from "@mui/material/MenuItem";
 
-
 import FormGroup from "@mui/material/FormGroup";
-import FormLabel from "@mui/material/FormLabel";
 import TextField from "@mui/material/TextField";
-import Slider from "@mui/material/Slider";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import { postManga } from "../../store/user/actions";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
@@ -57,12 +52,14 @@ export default function MangaRegistrationForm() {
   }, [dispatch]);
 
   useEffect(() => {
-    setCollectionComplete(collectionComplete)
+    setCollectionComplete(collectionComplete);
   }, []);
-
 
   const mangasDb = useSelector(selectAllMangas);
   console.log("what is my selector", mangasDb);
+
+  const userMangas = useSelector(selectUsersManga);
+  console.log("what is my selector", userMangas);
 
   const onChangeHandler = (text) => {
     let matches = [];
@@ -93,20 +90,11 @@ export default function MangaRegistrationForm() {
     setAnchorElNav(navigate("/mangas"));
   };
 
-  // const checkCollectionComplete = () => {
-  //   if (volumesOwned === totalVolumes) { 
-  //     setCollectionComplete(!collectionComplete)
-  //   } else {
-  //     setCollectionComplete(collectionComplete)
-  //   }
-  // };
-
   function submitForm(event) {
     event.preventDefault();
     if (volumesOwned > totalVolumes || star > 6) {
       return;
     } else {
-      
       dispatch(
         postManga(
           userId,
@@ -120,15 +108,13 @@ export default function MangaRegistrationForm() {
           reading,
           lastVolumeRead,
           collectionComplete,
-          star,
+          star
         ),
         navigateMyCollection()
       );
     }
     console.log("submiting form");
   }
-
-
 
   return (
     <Container>
@@ -154,11 +140,6 @@ export default function MangaRegistrationForm() {
             label="Title"
             variant="outlined"
             style={{ marginBottom: "15px" }}
-            // onBlur={() => {
-            //   setTimeout(() => {
-            //     setSuggestions([]);
-            //   }, 100);
-            // }}
           />
           {suggestions &&
             suggestions.map((suggestion, i) => (
@@ -171,6 +152,10 @@ export default function MangaRegistrationForm() {
               </div>
             ))}
         </FormGroup>
+        <div style={{ marginBottom: 10 }}>
+          If you don`t find your manga in our suggestions, you can register it
+          in our database by just filling all the fields correctly :){" "}
+        </div>
         <FormGroup>
           <TextField
             value={author}
@@ -240,7 +225,8 @@ export default function MangaRegistrationForm() {
         <FormControl sx={{ m: 3, minWidth: 150, marginTop: 1, marginLeft: 1 }}>
           <InputLabel
             id="demo-simple-select-standard-label"
-            style={{ fontSize: 15, marginTop: -10 }}>
+            style={{ fontSize: 15, marginTop: -10 }}
+          >
             Reading?{" "}
           </InputLabel>
           <Select
@@ -249,7 +235,8 @@ export default function MangaRegistrationForm() {
             id="demo-simple-select-standard reading"
             value={reading}
             onChange={(event) => setReading(event.target.value)}
-            label="Collection Complete?">
+            label="Collection Complete?"
+          >
             <MenuItem value={true}>Yes</MenuItem>
             <MenuItem value={false}>No</MenuItem>
           </Select>
@@ -277,36 +264,41 @@ export default function MangaRegistrationForm() {
             </p>
           ) : null}
         </FormGroup>
-        
+
         <FormControl sx={{ m: 1, minWidth: 200, marginTop: 2 }}>
           <InputLabel
             id="demo-simple-select-standard-label"
-            style={{ fontSize: 15, marginTop: -10 }}>
+            style={{ fontSize: 15, marginTop: -10 }}
+          >
             Collection Complete?{" "}
-          </InputLabel> 
-          <Select 
+          </InputLabel>
+          <Select
             className="selectFilters"
             labelId="demo-simple-select-standard-label"
             id="demo-simple-select-standard reading"
-            value={volumesOwned === totalVolumes ? !collectionComplete : collectionComplete}
+            value={
+              volumesOwned === totalVolumes
+                ? !collectionComplete
+                : collectionComplete
+            }
             label="Collection Complete?"
-            inputProps={{ readOnly: true }}>
+            inputProps={{ readOnly: true }}
+          >
             <MenuItem value={true}>Yes</MenuItem>
             <MenuItem value={false}>No</MenuItem>
           </Select>
         </FormControl>
-        
-        
-    
+
         <FormGroup>
-          <Box sx={{"& > legend": { mt: 2 }, }}>
+          <Box sx={{ "& > legend": { mt: 2 } }}>
             <Typography component="legend">Stars</Typography>
             <Rating
               name="simple-controlled"
               value={star}
               onChange={(event, newValue) => {
-               setStar(newValue);
-              }}/>
+                setStar(newValue);
+              }}
+            />
           </Box>
         </FormGroup>
 
