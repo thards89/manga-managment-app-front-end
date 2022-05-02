@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:4000";
+const API_URL = "https://manga-managment-app.herokuapp.com";
 
 export function startLoading() {
   return {
