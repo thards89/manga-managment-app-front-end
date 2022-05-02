@@ -3,7 +3,6 @@ import {
   LOG_OUT,
   LOGIN_SUCCESS,
   TOKEN_STILL_VALID,
-  HANDLE_SEARCH_ICONS,
 } from "./actions";
 
 const initialState = {
