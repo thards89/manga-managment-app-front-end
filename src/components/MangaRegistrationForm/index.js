@@ -52,8 +52,17 @@ export default function MangaRegistrationForm() {
   }, [dispatch]);
 
   useEffect(() => {
-    setCollectionComplete(collectionComplete);
+    setTotalVolumes();
   }, []);
+
+  useEffect(() => {
+    setVolumesOwned();
+  }, []);
+
+  useEffect(() => {
+    setCollectionComplete(collectionComplete);
+  }, [collectionComplete]);
+
 
   const mangasDb = useSelector(selectAllMangas);
   console.log("what is my selector", mangasDb);
@@ -183,7 +192,7 @@ export default function MangaRegistrationForm() {
         <FormGroup>
           <TextField
             value={totalVolumes}
-            onChange={(event) => setTotalVolumes(event.target.value)}
+            onChange={(event) => setTotalVolumes(parseInt(event.target.value))}
             type="number"
             id="outlined-basic"
             label="Total Volumes"

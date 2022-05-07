@@ -11,7 +11,7 @@ export default function mangaSliceReducer(state = initialState, action) {
       };
     }
     case "manga/getAllMangas": {
-      console.log("reducer", action);
+      console.log("reducer", action.payload);
       return {
         ...state,
         manga: [...action.payload],
