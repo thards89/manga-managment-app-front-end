@@ -45,6 +45,10 @@ export default function MyCollection() {
       case "publisher":
         setFilteredMangas([...mangas].sort(compareMangaPublisher));
         break;
+      //  case "date":
+      //     setFilteredMangas([...mangas].sort(compareMangaDate));
+      //     break;
+
       default:
         const managaList = mangas ? mangas : [];
         setFilteredMangas([...managaList]);
@@ -115,6 +119,10 @@ export default function MyCollection() {
   function bringIncompleteCollections(manga) {
     return manga.userMangas.collectionComplete !== true;
   }
+
+  // function compareMangaDate(manga) {
+  //   return manga.userMangas.sort((a,b) => new Date(a) < new Date(b) ? 1 : -1);
+  // }
 
   if (!mangas) return <div>loading</div>;
   return (

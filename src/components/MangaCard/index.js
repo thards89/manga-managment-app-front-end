@@ -118,6 +118,7 @@ export default function MangaCard(props) {
               justify="flex-start"
               alignItems="flex-start"
               flexWrap="wrap"
+              whiteSpace="normal"
             >
               <Card
                 sx={{
@@ -127,6 +128,7 @@ export default function MangaCard(props) {
                   flexWrap: "wrap",
                   maxWidth: 240,
                   borderBlockColor: "black",
+                  whiteSpace: "normal",
                 }}
               >
                 <CardMedia
@@ -136,7 +138,12 @@ export default function MangaCard(props) {
                   alt="img"
                 />
                 <CardContent sx={{ flexGrow: 0 }}>
-                  <Typography gutterBottom variant="h5" component="h2" noWrap>
+                  <Typography
+                    gutterBottom
+                    variant="h5"
+                    component="h2"
+                    sx={{ whiteSpace: "normal" }}
+                  >
                     {props.title}
                   </Typography>
                   <Typography>
