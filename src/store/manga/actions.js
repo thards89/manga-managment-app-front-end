@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_URL } from "../../config/constants";
+import { apiUrl } from "../../config/constants";
 
 export function startLoading() {
   return {
@@ -16,7 +16,7 @@ export function allMangasFetched(data) {
 
 export default async function fetchMangas(dispatch, getState) {
   dispatch(startLoading());
-  const response = await axios.get(`${API_URL}/manga`);
+  const response = await axios.get(`${apiUrl}/manga`);
   console.log("thunk manga", response.data);
 
   dispatch(allMangasFetched(response.data));
