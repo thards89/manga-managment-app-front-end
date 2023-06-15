@@ -1,6 +1,7 @@
 # My Manga Library
 
 With this app, you can register all the manga books yoou have and than manage your collection and what you are currently reading.
+
 ![mangaApp-2](https://github.com/thards89/manga-managment-app-front-end/assets/96024390/60c65491-02ab-4b97-9cd9-2dfd89b361b4)
 
 
