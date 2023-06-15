@@ -5,6 +5,7 @@ With this app, you can register all the manga books you have and then manage you
 ![mangaApp-2](https://github.com/thards89/manga-managment-app-front-end/assets/96024390/60c65491-02ab-4b97-9cd9-2dfd89b361b4)
 
 It is built with:<br>
+<br> 
 <b> Database: </b> <br>
 ![](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white) 
 <br>
@@ -15,7 +16,7 @@ It is built with:<br>
 <b> Front-end:</b> <br>
 ![](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB) ![](https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white)
 
-<b>Test User:</b>user@user.com
+<b>Test User:</b> user@user.com
 <br>
 <b> Password:</b>  1234
 
