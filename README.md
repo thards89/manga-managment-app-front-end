@@ -5,15 +5,19 @@ With this app, you can register all the manga books you have and then manage you
 ![mangaApp-2](https://github.com/thards89/manga-managment-app-front-end/assets/96024390/60c65491-02ab-4b97-9cd9-2dfd89b361b4)
 
 It is built with:<br>
-Database: ![](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white) 
+<b> Database: </b> <br>
+![](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white) 
 <br>
-Back-end: ![](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+<b> Back-end:</b>  <br>
+![](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
 ![](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
 <br>
-Front-end:![](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB) ![](https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white)
+<b> Front-end:</b> <br>
+![](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB) ![](https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white)
 
-Test User: user@user.com
-password: 1234
+<b>Test User:</b>user@user.com
+<br>
+<b> Password:</b>  1234
 
 ## Table of contents:
 
