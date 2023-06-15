@@ -30,7 +30,7 @@ It is built with:<br>
 ![manga-libray](https://github.com/thards89/manga-managment-app-front-end/assets/96024390/a99075e6-cf2c-47e8-bf57-0e1475af08b4)
 
 
-## SETUP How to use this template
+## SETUP How to check this project
 
 1. Create a new project based on this template using the `Use this template` button
 
