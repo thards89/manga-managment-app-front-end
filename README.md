@@ -12,10 +12,7 @@ With this app, you can register all the manga books yoou have and than manage yo
 - **[Create React App docs](#cra-docs)**
 
 ## Screenshots
-![mangaApp-1](https://github.com/thards89/manga-managment-app-front-end/assets/96024390/12100556-f189-4e45-aa48-9e7fdc70d05c)
-![mangaApp-3](https://github.com/thards89/manga-managment-app-front-end/assets/96024390/26113318-88da-47f3-963c-2b5e4b55a4e6)
-![mangaApp-4](https://github.com/thards89/manga-managment-app-front-end/assets/96024390/98617998-0257-47fc-bce9-22df6c46cba6)
-
+![manga-libray](https://github.com/thards89/manga-managment-app-front-end/assets/96024390/a99075e6-cf2c-47e8-bf57-0e1475af08b4)
 
 
 ## SETUP How to use this template
